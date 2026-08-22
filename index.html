@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>待ち時間で創作する</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="app">
+
+  <div id="timer" class="timer" aria-live="polite">03:00</div>
+  <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+
+  <!-- 画面1 -->
+  <section id="screen1" class="screen active">
+    <div class="screen-inner start-screen">
+      <h1>どちらのお題で<br>物語をつくりますか？</h1>
+
+      <div class="choice-list">
+        <button type="button" class="choice-button" data-mode="normal">
+          <span class="button-title">常用語</span>
+          <span class="button-note">日常で使う単語で出題されます</span>
+        </button>
+
+        <button type="button" class="choice-button" data-mode="difficult">
+          <span class="button-title">難易語</span>
+          <span class="button-note">日常では使わない単語で出題されます<br>挑戦したいときにおすすめです</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面2 -->
+  <section id="screen2" class="screen">
+    <div class="screen-inner">
+      <div class="story-header">
+        <span>ジャンル：<strong id="genre2"></strong></span>
+        <span>人物 / もの / できごと</span>
+      </div>
+
+      <div class="screen2-body">
+        <h2>ジャンルは<span id="genre2Text"></span>で<br>この3つを必ず登場させてください</h2>
+
+        <div class="word-list">
+          <div class="word-card">
+            <div class="word-label">登場人物</div>
+            <div id="person2" class="word-value"></div>
+          </div>
+          <div class="word-card">
+            <div class="word-label">もの・場所</div>
+            <div id="place2" class="word-value"></div>
+          </div>
+          <div class="word-card">
+            <div class="word-label">できごと</div>
+            <div id="event2" class="word-value"></div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="redrawButton" class="button secondary">引き直す</button>
+          <button type="button" id="startButton" class="button primary">はじめる</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面3 -->
+  <section id="screen3" class="screen">
+    <div class="screen-inner question-inner">
+      <div class="story-header">
+        <span class="common-genre">ジャンル：<strong id="genre3"></strong></span>
+        <span class="common-words">
+          <strong id="person3"></strong> /
+          <strong id="place3"></strong> /
+          <strong id="event3"></strong>
+        </span>
+      </div>
+
+      <div class="question-content">
+        <h2>この物語の主人公は？</h2>
+        <input id="heroInput" class="text-input" type="text" maxlength="40" autocomplete="off">
+        <button type="button" id="next3" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面4 -->
+  <section id="screen4" class="screen">
+    <div class="screen-inner question-inner">
+      <div class="story-header">
+        <span class="common-genre">ジャンル：<strong id="genre4"></strong></span>
+        <span class="common-words">
+          <strong id="person4"></strong> /
+          <strong id="place4"></strong> /
+          <strong id="event4"></strong>
+        </span>
+      </div>
+
+      <div class="question-content">
+        <div class="context-block">
+          <div class="context-label">主人公</div>
+          <div id="hero4" class="context-value"></div>
+        </div>
+
+        <h2>主人公に、何が起こる？</h2>
+        <textarea id="happeningInput" class="text-input textarea" maxlength="300"></textarea>
+        <p class="hint">物語の「起」の部分です</p>
+        <button type="button" id="next4" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面5 -->
+  <section id="screen5" class="screen">
+    <div class="screen-inner question-inner">
+      <div class="story-header">
+        <span class="common-genre">ジャンル：<strong id="genre5"></strong></span>
+        <span class="common-words">
+          <strong id="person5"></strong> /
+          <strong id="place5"></strong> /
+          <strong id="event5"></strong>
+        </span>
+      </div>
+
+      <div class="question-content">
+        <div class="context-block">
+          <div class="context-label">主人公</div>
+          <div id="hero5" class="context-value"></div>
+        </div>
+
+        <div class="context-block">
+          <div class="context-label">起きたこと</div>
+          <div id="happening5" class="context-value"></div>
+        </div>
+
+        <h2>そのあと、どうなる？</h2>
+        <textarea id="afterInput" class="text-input textarea" maxlength="300"></textarea>
+        <p class="hint">物語の「承」「転」の部分です</p>
+        <button type="button" id="next5" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面6 -->
+  <section id="screen6" class="screen">
+    <div class="screen-inner question-inner">
+      <div class="story-header">
+        <span class="common-genre">ジャンル：<strong id="genre6"></strong></span>
+        <span class="common-words">
+          <strong id="person6"></strong> /
+          <strong id="place6"></strong> /
+          <strong id="event6"></strong>
+        </span>
+      </div>
+
+      <div class="question-content">
+        <div class="context-block">
+          <div class="context-label">主人公</div>
+          <div id="hero6" class="context-value"></div>
+        </div>
+
+        <div class="context-block">
+          <div class="context-label">起きたこと</div>
+          <div id="happening6" class="context-value"></div>
+        </div>
+
+        <div class="context-block">
+          <div class="context-label">そのあと</div>
+          <div id="after6" class="context-value"></div>
+        </div>
+
+        <h2>この物語を、一言で終わらせてください</h2>
+        <input id="endingInput" class="text-input" type="text" maxlength="120">
+        <p class="hint">物語の「結」の部分です</p>
+        <button type="button" id="finishButton" class="button primary full">物語を見る</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面7 -->
+  <section id="screen7" class="screen">
+    <div class="screen-inner final-screen">
+      <h1>完成した物語</h1>
+
+      <div class="final-genre">
+        <span>ジャンル</span>
+        <strong id="finalGenre"></strong>
+      </div>
+
+      <div class="final-keywords">
+        <span id="finalPerson"></span>
+        <span>/</span>
+        <span id="finalPlace"></span>
+        <span>/</span>
+        <span id="finalEvent"></span>
+      </div>
+
+      <div class="final-story">
+        <div class="final-row">
+          <div class="final-label">主人公</div>
+          <div id="finalHero" class="final-value"></div>
+        </div>
+        <div class="final-row">
+          <div class="final-label">起きたこと</div>
+          <div id="finalHappening" class="final-value"></div>
+        </div>
+        <div class="final-row">
+          <div class="final-label">そのあと</div>
+          <div id="finalAfter" class="final-value"></div>
+        </div>
+        <div class="final-row">
+          <div class="final-label">最後</div>
+          <div id="finalEnding" class="final-value last"></div>
+        </div>
+      </div>
+
+      <p class="save-note">スクリーンショットで保存できます</p>
+
+      <div class="final-actions">
+        <button type="button" id="saveButton" class="button secondary">保存</button>
+        <button type="button" id="restartButton" class="button primary">もう一度</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="./script.js" defer></script>
+</body>
+</html>

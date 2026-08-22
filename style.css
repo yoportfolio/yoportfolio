@@ -1,0 +1,377 @@
+/* =========================================================
+   色を変更したい場合は、ここを書き換えてください。
+   ========================================================= */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #20242a;
+  --muted: #7a818a;
+  --line: #d8dde3;
+  --line-dark: #aeb6bf;
+  --blue: #246bce;
+  --blue-dark: #1855a5;
+  --danger: #c93b3b;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+}
+
+body {
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Noto Sans JP", Meiryo, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+button, input, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.timer {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 20;
+  padding: 5px 10px;
+  color: var(--muted);
+  background: rgba(255,255,255,.92);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer.time-up { color: var(--blue); }
+
+.progress-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 19;
+  width: 100%;
+  height: 3px;
+  background: #edf0f3;
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  background: var(--blue);
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+}
+
+.screen.active { display: block; }
+
+.screen-inner {
+  width: min(100% - 34px, 620px);
+  margin: 0 auto;
+  padding: 70px 0 55px;
+}
+
+.start-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.start-screen h1 {
+  margin: 0 0 50px;
+  text-align: center;
+  font-size: clamp(27px, 7vw, 38px);
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+
+.choice-list {
+  display: grid;
+  gap: 42px;
+}
+
+.choice-button {
+  width: min(100%, 330px);
+  margin: 0 auto;
+  padding: 18px 18px 12px;
+  background: #fff;
+  border: 1.5px solid #333;
+  border-radius: 2px;
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+}
+
+.choice-button:active,
+.button:active {
+  transform: translateY(1px);
+}
+
+.button-title {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.button-note {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 0 15px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.story-header strong { color: var(--text); }
+
+.screen2-body,
+.question-content {
+  width: min(100%, 470px);
+  margin: 0 auto;
+}
+
+.screen2-body {
+  padding-top: 74px;
+}
+
+.screen2-body h2,
+.question-content h2 {
+  margin: 0 0 30px;
+  text-align: center;
+  font-size: clamp(22px, 5.7vw, 30px);
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+
+.word-list {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.word-card {
+  padding: 17px 18px;
+  border: 1px solid var(--line-dark);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.word-label {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.word-value {
+  min-height: 29px;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.button {
+  min-height: 54px;
+  border-radius: 3px;
+  border: 1px solid var(--text);
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.button.primary {
+  color: #fff;
+  background: #20242a;
+  border-color: #20242a;
+}
+
+.button.secondary {
+  color: var(--text);
+  background: #fff;
+  border-color: #7d858e;
+}
+
+.question-inner {
+  padding-top: 70px;
+}
+
+.question-content {
+  padding-top: 130px;
+}
+
+.question-content h2 {
+  margin-bottom: 36px;
+}
+
+.text-input {
+  display: block;
+  width: 100%;
+  min-height: 62px;
+  padding: 14px 15px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid #8e969e;
+  border-radius: 3px;
+  outline: none;
+  font-size: 18px;
+}
+
+.text-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(36,107,206,.12);
+}
+
+.text-input.invalid {
+  border: 2px solid var(--danger);
+  box-shadow: none;
+}
+
+.textarea {
+  min-height: 125px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.context-block {
+  margin-bottom: 25px;
+}
+
+.context-label {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.context-value {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.full {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.final-screen {
+  padding-top: 90px;
+}
+
+.final-screen h1 {
+  margin: 0 0 35px;
+  text-align: center;
+  font-size: clamp(30px, 8vw, 42px);
+  letter-spacing: -.05em;
+}
+
+.final-genre {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.final-genre span {
+  color: var(--muted);
+  margin-right: 10px;
+  font-size: 13px;
+}
+
+.final-genre strong { font-size: 20px; }
+
+.final-keywords {
+  margin-bottom: 26px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.final-story {
+  border: 1px solid var(--line-dark);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.final-row {
+  padding: 17px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.final-row:last-child { border-bottom: 0; }
+
+.final-label {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.final-value {
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.final-value.last {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.save-note {
+  margin: 17px 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.final-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 12px;
+}
+
+@media (min-width: 700px) {
+  .screen-inner { padding-top: 80px; }
+  .question-content { padding-top: 145px; }
+  .screen2-body { padding-top: 90px; }
+}
+
+@media (max-width: 420px) {
+  .story-header { font-size: 12px; }
+  .screen-inner { width: min(100% - 28px, 620px); }
+  .question-content { padding-top: 100px; }
+}

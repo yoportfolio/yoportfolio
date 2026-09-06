@@ -96,6 +96,14 @@ function updateHeaderGenres() {
     const element = $(id);
     if (element) element.textContent = state.genre;
   });
+
+  ["3", "4", "5", "6"].forEach((screenNo) => {
+    const element = $("genreInstruction" + screenNo);
+    if (element) {
+      const genre = element.querySelector("span");
+      if (genre) genre.textContent = state.genre;
+    }
+  });
 }
 
 // 4つの回答欄に入力された文章をまとめます。

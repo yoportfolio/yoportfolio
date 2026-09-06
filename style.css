@@ -256,23 +256,85 @@ button { -webkit-tap-highlight-color: transparent; }
 .full { width: 100%; margin-top: 25px; }
 
 /* 完成画面 */
-.final-screen { padding-top: 95px; }
-.final-screen h1 {
-  margin: 0 0 35px; text-align: center;
-  font-size: clamp(30px, 8vw, 42px); letter-spacing: -.05em;
+.final-screen {
+  width: min(100% - 28px, 760px);
+  padding-top: 42px;
+  padding-bottom: 46px;
 }
-.final-genre { margin-bottom: 8px; text-align: center; }
-.final-genre span { color: var(--muted); margin-right: 10px; font-size: 13px; }
-.final-genre strong { font-size: 20px; }
-.final-keywords { margin-bottom: 26px; color: var(--muted); text-align: center; font-size: 13px; }
-.final-story { border: 1px solid var(--line-dark); border-radius: 3px; overflow: hidden; }
-.final-row { padding: 17px 18px; border-bottom: 1px solid var(--line); }
-.final-row:last-child { border-bottom: 0; }
-.final-label { margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
-.final-value { font-size: 18px; line-height: 1.7; overflow-wrap: anywhere; }
-.final-value.last { font-size: 21px; font-weight: 700; }
-.save-note { margin: 17px 0; color: var(--muted); text-align: center; font-size: 13px; }
-.final-actions { display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; }
+
+.final-screen h1 {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: clamp(28px, 7vw, 42px);
+  line-height: 1.35;
+  letter-spacing: -.05em;
+}
+
+.final-genre {
+  margin-bottom: 28px;
+  text-align: center;
+  color: var(--text);
+}
+
+.final-genre span {
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 700;
+}
+
+.final-genre strong {
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 700;
+}
+
+.final-story-card {
+  position: relative;
+  width: min(100%, 610px);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.final-genre-background {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.final-story-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10% 10%;
+  box-sizing: border-box;
+}
+
+.final-story-text {
+  width: 100%;
+  min-height: 14%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #111;
+  font-size: clamp(15px, 3.2vw, 24px);
+  font-weight: 500;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.final-actions {
+  width: min(100%, 610px);
+  margin: 28px auto 0;
+}
+
+.final-actions .button {
+  width: 100%;
+  min-height: 60px;
+  font-size: clamp(18px, 4vw, 24px);
+}
 
 @media (min-width: 700px) {
   .screen-inner { padding-top: 88px; }

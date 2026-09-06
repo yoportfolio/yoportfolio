@@ -180,9 +180,20 @@ function updateStoryScreens() {
 
 function updateFinalScreen() {
   $("finalGenre").textContent = state.genre;
-  $("finalPerson").textContent = state.person;
-  $("finalPlace").textContent = state.place;
-  $("finalEvent").textContent = state.event;
+
+  const genreImages = {
+    "ホラー": "./ホラー.PNG",
+    "SF": "./SF.PNG",
+    "ミステリー": "./ミステリー.PNG",
+    "恋愛": "./恋愛.PNG",
+    "コメディ": "./コメディ.PNG"
+  };
+
+  const background = $("finalGenreBackground");
+  if (background) {
+    background.src = genreImages[state.genre] || genreImages["ホラー"];
+  }
+
   $("finalHero").textContent = state.hero;
   $("finalHappening").textContent = state.happening;
   $("finalAfter").textContent = state.after;
@@ -308,10 +319,6 @@ $("finishButton").addEventListener("click", () => {
   showScreen(7);
 });
 
-// 保存案内
-$("saveButton").addEventListener("click", () => {
-  alert("完成画面をスクリーンショットで保存できます。");
-});
 
 // 最初からやり直す
 $("restartButton").addEventListener("click", resetAll);

@@ -27,7 +27,7 @@
           <div class="intro-example-card solo-card">
             <img class="intro-border intro-border-left" src="./intro-border-left.png" alt="" aria-hidden="true">
             <div class="intro-card-copy">
-              <div class="intro-card-title">・一人で遊ぶ</div>
+              <div class="intro-card-title">一人で遊ぶ</div>
               <p>１人でお題に回答して<br>物語を創作する</p>
             </div>
             <div class="intro-illustration">
@@ -36,9 +36,9 @@
           </div>
 
           <div class="intro-example-card friends-card">
-            <img class="intro-border intro-border-right" src="./intro-border-right.png" alt="" aria-hidden="true">
+            <img class="intro-border intro-border-left" src="./intro-border-left.png" alt="" aria-hidden="true">
             <div class="intro-card-copy">
-              <div class="intro-card-title">・友達と遊ぶ</div>
+              <div class="intro-card-title">友達と遊ぶ</div>
               <p>お題ごとに回答者を<br>交代して物語を創作する</p>
             </div>
             <div class="intro-illustration">
@@ -204,20 +204,24 @@
   <!-- 完成画面 -->
   <section id="screen7" class="screen">
     <div class="screen-inner final-screen">
-      <h1>完成した物語</h1>
-      <div class="final-genre"><span>ジャンル</span><strong id="finalGenre"></strong></div>
-      <div class="final-keywords"><span id="finalPerson"></span><span>/</span><span id="finalPlace"></span><span>/</span><span id="finalEvent"></span></div>
+      <h1>あなたの物語が完成しました</h1>
 
-      <div class="final-story">
-        <div class="final-row"><div class="final-label">主人公</div><div id="finalHero" class="final-value"></div></div>
-        <div class="final-row"><div class="final-label">起きたこと</div><div id="finalHappening" class="final-value"></div></div>
-        <div class="final-row"><div class="final-label">そのあと</div><div id="finalAfter" class="final-value"></div></div>
-        <div class="final-row"><div class="final-label">最後</div><div id="finalEnding" class="final-value last"></div></div>
+      <div class="final-genre">
+        <span>ジャンル：</span><strong id="finalGenre"></strong>
       </div>
 
-      <p class="save-note">スクリーンショットで保存できます</p>
+      <div class="final-story-card">
+        <img id="finalGenreBackground" class="final-genre-background" src="./ホラー.PNG" alt="" aria-hidden="true">
+
+        <div class="final-story-content">
+          <div id="finalHero" class="final-story-text"></div>
+          <div id="finalHappening" class="final-story-text"></div>
+          <div id="finalAfter" class="final-story-text"></div>
+          <div id="finalEnding" class="final-story-text"></div>
+        </div>
+      </div>
+
       <div class="final-actions">
-        <button type="button" id="saveButton" class="button secondary">保存</button>
         <button type="button" id="restartButton" class="button primary">もう一度</button>
       </div>
     </div>

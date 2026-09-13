@@ -15,6 +15,8 @@
     <div id="step2" class="question-step">第２問</div>
     <div id="step3" class="question-step">第３問</div>
     <div id="step4" class="question-step">第４問</div>
+    <div id="step5" class="question-step">タイトル</div>
+    <div id="step6" class="question-step">名前</div>
   </div>
 
   <!-- 画面1：説明ページ -->
@@ -200,31 +202,50 @@
         <input id="endingInput" class="text-input" type="text" maxlength="120">
         <p class="hint">物語の「結」の部分です</p>
         <p id="keywordError" class="keyword-error" aria-live="polite"></p>
-        <button type="button" id="finishButton" class="button primary full">物語を見る</button>
+        <button type="button" id="next6" class="button primary full">次へ</button>
       </div>
     </div>
   </section>
 
-  <!-- 完成画面 -->
+  <!-- 第5問：タイトル -->
   <section id="screen7" class="screen">
-    <div class="screen-inner final-screen">
-      <h1>あなたの物語が完成しました</h1>
-
-      <div class="final-genre">
-        <span>ジャンル：</span><strong id="finalGenre"></strong>
+    <div class="screen-inner question-inner extra-question">
+      <div class="question-content">
+        <h2>この物語に<br>タイトルをつけるとしたら？</h2>
+        <p class="question-description">物語のタイトルを教えてください。</p>
+        <input id="titleInput" class="text-input" type="text" maxlength="40" autocomplete="off" placeholder="ここにタイトルを入力してください">
+        <button type="button" id="next7" class="button primary full">次へ</button>
       </div>
+    </div>
+  </section>
 
-      <div class="final-story-card">
-        <img id="finalGenreBackground" class="final-genre-background" src="./ホラー.PNG" alt="" aria-hidden="true">
+  <!-- 第6問：名前 -->
+  <section id="screen8" class="screen">
+    <div class="screen-inner question-inner extra-question">
+      <div class="question-content">
+        <h2>あなたの名前を<br>教えてください</h2>
+        <p class="question-description">本の著者として表示する名前を教えてください。</p>
+        <input id="authorInput" class="text-input" type="text" maxlength="30" autocomplete="off" placeholder="ここに名前を入力してください">
+        <button type="button" id="finishButton" class="button primary full">完成する</button>
+      </div>
+    </div>
+  </section>
 
-        <div class="final-story-content">
-          <div id="finalHero" class="final-story-text"></div>
-          <div id="finalHappening" class="final-story-text"></div>
-          <div id="finalAfter" class="final-story-text"></div>
-          <div id="finalEnding" class="final-story-text"></div>
+  <!-- 完成画面：本の表紙 -->
+  <section id="screen9" class="screen">
+    <div class="screen-inner final-screen">
+      <h1>あなたの本が出版されました。</h1>
+      <div class="book-cover" id="bookCover">
+        <img id="finalCoverImage" class="book-cover-image" src="./ホラー表紙.JPG" alt="完成した本の表紙">
+        <div class="book-cover-top">
+          <div id="finalTitle" class="book-title"></div>
+          <div id="finalAuthor" class="book-author"></div>
+        </div>
+        <div class="book-band">
+          <p id="finalStorySummary" class="book-summary"></p>
+          <p id="finalTagline" class="book-tagline"></p>
         </div>
       </div>
-
       <div class="final-actions">
         <button type="button" id="restartButton" class="button primary">もう一度</button>
       </div>

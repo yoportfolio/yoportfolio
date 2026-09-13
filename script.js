@@ -29,7 +29,9 @@ const state = {
   hero: "",
   happening: "",
   after: "",
-  ending: ""
+  ending: "",
+  title: "",
+  author: ""
 };
 
 const $ = (id) => document.getElementById(id);
@@ -73,8 +75,10 @@ function updateQuestionProgress(screenNumber) {
   if (screenNumber === 5) completed = 2;
   if (screenNumber === 6) completed = 3;
   if (screenNumber === 7) completed = 4;
+  if (screenNumber === 8) completed = 5;
+  if (screenNumber === 9) completed = 6;
 
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 6; i++) {
     $("step" + i).classList.toggle("done", i <= completed);
   }
 }
@@ -187,25 +191,30 @@ function updateStoryScreens() {
 }
 
 function updateFinalScreen() {
-  $("finalGenre").textContent = state.genre;
-
-  const genreImages = {
-    "ホラー": "./ホラー.PNG",
-    "SF": "./SF.PNG",
-    "ミステリー": "./ミステリー.PNG",
-    "恋愛": "./恋愛.PNG",
-    "コメディ": "./コメディ.PNG"
+  const coverImages = {
+    "ホラー": "./ホラー表紙.JPG",
+    "SF": "./SF表紙.JPG",
+    "ミステリー": "./ミステリー表紙.JPG",
+    "恋愛": "./恋愛表紙.JPG",
+    "コメディ": "./コメディ表紙.JPG"
   };
 
-  const background = $("finalGenreBackground");
-  if (background) {
-    background.src = genreImages[state.genre] || genreImages["ホラー"];
-  }
+  const taglines = {
+    "SF": "期待のデビュー作！",
+    "ミステリー": "あなたは最後まで騙される。期待の新星の話題作。",
+    "コメディ": "この小説が凄い！SNSで話題のデビュー作！",
+    "恋愛": "SNSで話題沸騰中の新作！",
+    "ホラー": "異色のデビュー作！"
+  };
 
-  $("finalHero").textContent = state.hero;
-  $("finalHappening").textContent = state.happening;
-  $("finalAfter").textContent = state.after;
-  $("finalEnding").textContent = state.ending;
+  const cover = $("bookCover");
+  cover.dataset.genre = state.genre;
+  $("finalCoverImage").src = coverImages[state.genre] || coverImages["ホラー"];
+  $("finalCoverImage").alt = `${state.genre}の本の表紙`;
+  $("finalTitle").textContent = state.title;
+  $("finalAuthor").textContent = state.author;
+  $("finalStorySummary").textContent = [state.hero, state.happening, state.after, state.ending].filter(Boolean).join(" ");
+  $("finalTagline").textContent = taglines[state.genre] || "期待のデビュー作！";
 }
 
 function requireInput(input) {
@@ -229,7 +238,9 @@ function resetAll() {
   state.happening = "";
   state.after = "";
   state.ending = "";
-  ["heroInput", "happeningInput", "afterInput", "endingInput"].forEach((id) => {
+  state.title = "";
+  state.author = "";
+  ["heroInput", "happeningInput", "afterInput", "endingInput", "titleInput", "authorInput"].forEach((id) => {
     $(id).value = "";
     $(id).classList.remove("invalid");
   });
@@ -267,7 +278,7 @@ $("startButton").addEventListener("click", () => {
 });
 
 // 入力中でも、お題を使った瞬間にカードをグレー表示へ変更します。
-["heroInput", "happeningInput", "afterInput", "endingInput"].forEach((id) => {
+["heroInput", "happeningInput", "afterInput", "endingInput", "titleInput", "authorInput"].forEach((id) => {
   $(id).addEventListener("input", () => {
     updateKeywordTrackers();
     if ($("keywordError")) $("keywordError").textContent = "";
@@ -304,61 +315,36 @@ $("next5").addEventListener("click", () => {
   showScreen(6);
 });
 
-// 第4問 → 完成画面
-$("finishButton").addEventListener("click", () => {
+// 第4問 → 第5問（タイトル）
+$("next6").addEventListener("click", () => {
   const input = $("endingInput");
   if (!requireInput(input)) return;
-
-  // 第1問はお題を使わなくても先へ進める例外です。
-  // ただし第4問終了時には、4問すべての回答の中で3つのお題を
-  // すべて使っていないと完成画面へ進めません。
   updateKeywordTrackers();
-
   if (!allKeywordsUsed()) {
     const missing = getMissingKeywords();
-    $("keywordError").textContent =
-      "まだ使われていないお題があります：" + missing.join(" / ");
+    $("keywordError").textContent = "まだ使われていないお題があります：" + missing.join(" / ");
     return;
   }
-
-  $("keywordError").textContent = "";
   state.ending = input.value.trim();
-  updateFinalScreen();
+  updateStoryScreens();
   showScreen(7);
 });
 
+// 第5問 → 第6問
+$("next7").addEventListener("click", () => {
+  const input = $("titleInput");
+  if (!requireInput(input)) return;
+  state.title = input.value.trim();
+  showScreen(8);
+});
 
-// 最初からやり直す
+// 第6問 → 完成画面
+$("finishButton").addEventListener("click", () => {
+  const input = $("authorInput");
+  if (!requireInput(input)) return;
+  state.author = input.value.trim();
+  updateFinalScreen();
+  showScreen(9);
+});
+
 $("restartButton").addEventListener("click", resetAll);
-
-
-// 説明ページのイラストを指定順に繰り返し表示します。
-const INTRO_ANIMATIONS = [
-  {
-    id: "soloIllustration",
-    frames: ["./Webうさぎ.PNG", "./Webうさぎ12.PNG", "./Webうさぎ13.PNG", "./Webうさぎ12.PNG"]
-  },
-  {
-    id: "friendsIllustration",
-    frames: ["./Webうさぎ2.PNG", "./Webうさぎ22.PNG", "./Webうさぎ23.PNG", "./Webうさぎ22.PNG"]
-  }
-];
-
-function startIntroAnimations() {
-  INTRO_ANIMATIONS.forEach(({ id, frames }) => {
-    const image = $(id);
-    if (!image) return;
-
-    let frameIndex = 0;
-    image.src = frames[frameIndex];
-
-    window.setInterval(() => {
-      frameIndex = (frameIndex + 1) % frames.length;
-      image.src = frames[frameIndex];
-    }, 700);
-  });
-}
-
-startIntroAnimations();
-updateQuestionProgress(0);
-updateKeywordTrackers();

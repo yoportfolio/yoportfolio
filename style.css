@@ -389,3 +389,290 @@ button { -webkit-tap-highlight-color: transparent; }
   .question-content { padding-top: 70px; }
   .question-step { font-size: 14px; }
 }
+
+/* ============================================================
+   追加：タイトル・著者入力と本の表紙風の完成画面
+   ============================================================ */
+.question-description {
+  margin: -12px 0 24px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.extra-question .question-content { padding-top: 110px; }
+
+/* 6段階になった進捗バー */
+.question-progress { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.question-step {
+  font-size: clamp(10px, 2.4vw, 17px);
+  padding-left: 14px;
+  padding-right: 10px;
+}
+.question-step:first-child { padding-left: 8px; }
+.question-step:last-child { padding-right: 8px; }
+
+/* 本の表紙 */
+.book-cover {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 3 / 4;
+  margin: 30px auto 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 12px 16px 24px rgba(0, 0, 0, .28), 2px 3px 5px rgba(0, 0, 0, .18);
+}
+.book-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.book-cover-top {
+  position: absolute;
+  inset: 0 0 33.333% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 9% 12%;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,.65);
+}
+.book-title {
+  max-width: 100%;
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.book-author {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 28px;
+  font-size: clamp(13px, 2.8vw, 18px);
+}
+.book-author strong { font-size: clamp(18px, 3.8vw, 27px); }
+.book-band {
+  position: absolute;
+  inset: 66.667% 0 0 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8% 9%;
+  box-sizing: border-box;
+}
+.book-band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.book-band p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(12px, 2.5vw, 19px);
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+
+@media (max-width: 420px) {
+  .question-step { font-size: 9px; padding-left: 8px; padding-right: 5px; }
+  .question-step:first-child, .question-step:last-child { padding-left: 5px; padding-right: 5px; }
+  .book-cover { width: min(100%, 360px); }
+  .book-cover-top { padding-left: 10%; padding-right: 10%; }
+  .book-band { padding: 7% 8%; }
+  .book-band p { font-size: 11px; }
+}
+
+/* ============================================================
+   最終ページ：ジャンル別の本の表紙
+   帯は画像ではなく、ジャンルごとの単色で表示します。
+   ============================================================ */
+.final-screen h1 {
+  margin-bottom: 30px;
+}
+
+.book-cover {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 12px 16px 24px rgba(0, 0, 0, .28), 2px 3px 5px rgba(0, 0, 0, .18);
+}
+
+.book-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-cover-top {
+  position: absolute;
+  inset: 0 0 33.333% 0;
+  padding: 6%;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,.55);
+}
+
+.book-title,
+.book-author {
+  position: absolute;
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.15;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.book-title {
+  font-size: clamp(30px, 7vw, 56px);
+}
+
+.book-author {
+  font-size: clamp(18px, 4vw, 30px);
+  font-weight: 700;
+}
+
+/* SF：タイトル右上、著者左下 */
+.book-cover[data-genre="SF"] .book-title {
+  top: 7%;
+  right: 8%;
+  color: #fff;
+}
+.book-cover[data-genre="SF"] .book-author {
+  left: 8%;
+  bottom: 7%;
+  color: #fff;
+}
+
+/* ミステリー：緑の文字、タイトル右上、著者左下 */
+.book-cover[data-genre="ミステリー"] .book-title {
+  top: 7%;
+  right: 8%;
+  color: #168b22;
+  text-shadow: none;
+}
+.book-cover[data-genre="ミステリー"] .book-author {
+  left: 8%;
+  bottom: 7%;
+  color: #168b22;
+  text-shadow: none;
+}
+
+/* コメディ：緑の文字、著者をタイトルの左側に上揃え */
+.book-cover[data-genre="コメディ"] .book-title {
+  top: 8%;
+  right: 8%;
+  color: #3d8d18;
+  text-shadow: none;
+}
+.book-cover[data-genre="コメディ"] .book-author {
+  top: 8%;
+  right: 29%;
+  color: #3d8d18;
+  text-shadow: none;
+}
+
+/* 恋愛：タイトル中央、著者も中央で下揃え */
+.book-cover[data-genre="恋愛"] .book-title {
+  top: 8%;
+  left: 50%;
+  transform: translateX(50%);
+  color: #fff;
+}
+.book-cover[data-genre="恋愛"] .book-author {
+  left: 50%;
+  bottom: 7%;
+  transform: translateX(50%);
+  color: #fff;
+}
+
+/* ホラー：タイトル中央、著者は左側で頭揃え */
+.book-cover[data-genre="ホラー"] .book-title {
+  top: 8%;
+  left: 50%;
+  transform: translateX(50%);
+  color: #fff;
+}
+.book-cover[data-genre="ホラー"] .book-author {
+  top: 12%;
+  left: 8%;
+  color: #fff;
+}
+
+.book-band {
+  position: absolute;
+  inset: 66.667% 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 7% 8% 6%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.book-band p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.book-summary {
+  font-size: clamp(12px, 2.4vw, 18px);
+  font-weight: 700;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.book-tagline {
+  font-size: clamp(17px, 3.4vw, 28px);
+  font-weight: 900;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.book-cover[data-genre="SF"] .book-band { background: #fff; color: #222; }
+.book-cover[data-genre="SF"] .book-tagline { color: #e51c23; }
+
+.book-cover[data-genre="ホラー"] .book-band { background: #e71919; color: #fff; }
+.book-cover[data-genre="ホラー"] .book-tagline { color: #fff; }
+
+.book-cover[data-genre="恋愛"] .book-band { background: #ffd6d8; color: #222; }
+.book-cover[data-genre="恋愛"] .book-tagline { color: #e51c23; }
+
+.book-cover[data-genre="コメディ"] .book-band { background: #ff9b43; color: #222; }
+.book-cover[data-genre="コメディ"] .book-tagline { color: #e51c23; }
+
+/* ミステリーは指定色が未記載のため、表紙に合わせた濃紺を採用 */
+.book-cover[data-genre="ミステリー"] .book-band { background: #202b3b; color: #fff; }
+.book-cover[data-genre="ミステリー"] .book-tagline { color: #ff3030; }
+
+@media (max-width: 420px) {
+  .book-cover { width: min(100%, 360px); }
+  .book-cover-top { padding: 5%; }
+  .book-summary { font-size: 11px; }
+  .book-tagline { font-size: 16px; }
+}

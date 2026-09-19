@@ -200,11 +200,11 @@ function updateFinalScreen() {
   };
 
   const taglines = {
-    "SF": "期待のデビュー作！",
+    "SF": "2026年度SF大賞に選出！\n期待のデビュー作！",
     "ミステリー": "あなたは最後まで騙される。期待の新星の話題作。",
-    "コメディ": "この小説が凄い！SNSで話題のデビュー作！",
-    "恋愛": "SNSで話題沸騰中の新作！",
-    "ホラー": "異色のデビュー作！"
+    "コメディ": "2026年度コメディカテゴリー１位\nこの小説が凄い！SNSで話題のデビュー作！",
+    "恋愛": "2026年度恋愛部門1位\nSNSで話題沸騰中の新作！",
+    "ホラー": "2026年度ベストホラー選出\n異色のデビュー作！"
   };
 
   const cover = $("bookCover");
@@ -215,6 +215,27 @@ function updateFinalScreen() {
   $("finalAuthor").textContent = state.author;
   $("finalStorySummary").textContent = [state.hero, state.happening, state.after, state.ending].filter(Boolean).join(" ");
   $("finalTagline").textContent = taglines[state.genre] || "期待のデビュー作！";
+
+  // 帯の可読性を優先し、入力されたストーリーが固定文に重ならない範囲で文字を自動調整します。
+  requestAnimationFrame(fitFinalBandText);
+}
+
+function fitFinalBandText() {
+  const summary = $("finalStorySummary");
+  const tagline = $("finalTagline");
+  if (!summary || !tagline) return;
+
+  const fit = (element, startPx, minPx) => {
+    element.style.fontSize = `${startPx}px`;
+    let size = startPx;
+    while (size > minPx && element.scrollHeight > element.clientHeight + 1) {
+      size -= 0.5;
+      element.style.fontSize = `${size}px`;
+    }
+  };
+
+  fit(summary, 21, 11);
+  fit(tagline, 30, 14);
 }
 
 function requireInput(input) {
@@ -345,6 +366,10 @@ $("finishButton").addEventListener("click", () => {
   state.author = input.value.trim();
   updateFinalScreen();
   showScreen(9);
+});
+
+window.addEventListener("resize", () => {
+  if ($("screen9")?.classList.contains("active")) fitFinalBandText();
 });
 
 $("restartButton").addEventListener("click", resetAll);

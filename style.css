@@ -1318,3 +1318,148 @@ button { -webkit-tap-highlight-color: transparent; }
     font-size: 19px;
   }
 }
+
+/* ============================================================
+   iPhone SE / iOS 16.6 最終レイアウト調整
+   縦方向の表示領域が特に短い端末では、固定の回答表示枠を
+   保ったまま、上下の余白・お題・入力欄・ボタンを圧縮します。
+   100svh の高さ制限による「次へ」ボタンの切れを防ぎます。
+   ============================================================ */
+@media (max-width: 420px) and (max-height: 600px) {
+  #screen3 .question-inner,
+  #screen4 .question-inner,
+  #screen5 .question-inner,
+  #screen6 .question-inner {
+    width: calc(100% - 28px);
+    height: auto;
+    min-height: calc(100svh - 34px);
+    padding: 4px 0 4px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #screen3 .genre-instruction,
+  #screen4 .genre-instruction,
+  #screen5 .genre-instruction,
+  #screen6 .genre-instruction {
+    width: 100%;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  #screen3 .keyword-tracker,
+  #screen4 .keyword-tracker,
+  #screen5 .keyword-tracker,
+  #screen6 .keyword-tracker {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  #screen3 .keyword-card,
+  #screen4 .keyword-card,
+  #screen5 .keyword-card,
+  #screen6 .keyword-card {
+    min-height: 60px;
+    height: 60px;
+    padding: 5px 3px;
+  }
+
+  #screen3 .keyword-label,
+  #screen4 .keyword-label,
+  #screen5 .keyword-label,
+  #screen6 .keyword-label {
+    margin-bottom: 2px;
+    font-size: 9px;
+    line-height: 1.1;
+  }
+
+  #screen3 .keyword-value,
+  #screen4 .keyword-value,
+  #screen5 .keyword-value,
+  #screen6 .keyword-value {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  #screen3 .question-content,
+  #screen4 .question-content,
+  #screen5 .question-content,
+  #screen6 .question-content {
+    width: 100%;
+    margin-top: 4px;
+    padding-top: 0;
+    min-height: 0;
+  }
+
+  /* 2〜4問目の表示枠は参考画像の赤枠と同じ固定高さを維持 */
+  #screen4 .previous-answers,
+  #screen5 .previous-answers,
+  #screen6 .previous-answers {
+    width: 100%;
+    height: 190px;
+    flex: 0 0 190px;
+    padding: 8px 14px;
+    margin: 0 0 3px;
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  #screen3 .question-content h2,
+  #screen4 .question-content h2,
+  #screen5 .question-content h2,
+  #screen6 .question-content h2 {
+    margin: 0 0 3px;
+    font-size: 23px;
+    line-height: 1.15;
+  }
+
+  #screen3 .text-input,
+  #screen4 .text-input,
+  #screen5 .text-input,
+  #screen6 .text-input {
+    min-height: 48px;
+    height: 48px;
+    padding: 7px 10px;
+    font-size: 17px;
+  }
+
+  #screen4 .textarea,
+  #screen5 .textarea {
+    min-height: 48px;
+    height: 48px;
+    resize: none;
+  }
+
+  #screen3 .full,
+  #screen4 .full,
+  #screen5 .full,
+  #screen6 .full {
+    min-height: 44px;
+    height: 44px;
+    margin-top: 4px;
+    padding: 0 10px;
+    font-size: 18px;
+  }
+
+  #screen4 .hint,
+  #screen5 .hint,
+  #screen6 .hint {
+    margin: 2px 0 0;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  #screen6 .keyword-error {
+    min-height: 0;
+    margin: 2px 0 0;
+    font-size: 10px;
+    line-height: 1.1;
+  }
+
+  /* 第1問は入力欄＋次へまで必ず画面内に収める */
+  #screen3 .question-content {
+    margin-top: 4px;
+  }
+}

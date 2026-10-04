@@ -182,12 +182,39 @@ function updateStoryScreens() {
   updateHeaderGenres();
   updateKeywordTrackers();
 
-  $("hero4").textContent = state.hero;
-  $("hero5").textContent = state.hero;
-  $("hero6").textContent = state.hero;
-  $("happening5").textContent = state.happening;
-  $("happening6").textContent = state.happening;
-  $("after6").textContent = state.after;
+  // 2〜4問目では、これまでにユーザーが入力した文章だけを
+  // ラベルなしでつなげて表示します。
+  // 表示枠の大きさはCSSで固定し、文章が長い場合は自動で縮小します。
+  const previousAnswers = [
+    ["previousAnswers4", [state.hero]],
+    ["previousAnswers5", [state.hero, state.happening]],
+    ["previousAnswers6", [state.hero, state.happening, state.after]]
+  ];
+
+  previousAnswers.forEach(([id, answers]) => {
+    const element = $(id);
+    if (!element) return;
+    element.textContent = answers.filter(Boolean).join(" ");
+    fitPreviousAnswerText(element);
+  });
+} 
+
+function fitPreviousAnswerText(element) {
+  if (!element) return;
+
+  // 現在の文字サイズを基準に、枠からはみ出す場合だけ縮小します。
+  const startPx = 20;
+  const minPx = 7;
+  let size = startPx;
+  element.style.fontSize = `${size}px`;
+
+  while (size > minPx && (
+    element.scrollHeight > element.clientHeight + 1 ||
+    element.scrollWidth > element.clientWidth + 1
+  )) {
+    size -= 0.5;
+    element.style.fontSize = `${size}px`;
+  }
 }
 
 function updateFinalScreen() {
@@ -370,6 +397,10 @@ $("finishButton").addEventListener("click", () => {
 
 window.addEventListener("resize", () => {
   if ($("screen9")?.classList.contains("active")) fitFinalBandText();
+  ["previousAnswers4", "previousAnswers5", "previousAnswers6"].forEach((id) => {
+    const element = $(id);
+    if (element) fitPreviousAnswerText(element);
+  });
 });
 
 $("restartButton").addEventListener("click", resetAll);

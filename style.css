@@ -739,3 +739,454 @@ button { -webkit-tap-highlight-color: transparent; }
   );
   mix-blend-mode: multiply;
 }
+
+
+/* ============================================================
+   1〜4問目：スマホでも1画面に収まる質問レイアウト
+   参考画像に合わせ、1問目のお題は横3列、
+   2〜4問目はこれまでの回答だけを固定枠内に表示します。
+   ============================================================ */
+
+/* 1問目：お題を横並びにする */
+#screen3 .keyword-tracker {
+  width: min(100%, 690px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 28px;
+}
+
+#screen3 .keyword-card {
+  min-height: 108px;
+  padding: 12px 8px;
+  border-radius: 0;
+  border-color: #b8b8b8;
+}
+
+#screen3 .keyword-card + .keyword-card {
+  border-left: 0;
+}
+
+#screen3 .keyword-label {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+#screen3 .keyword-value {
+  font-size: clamp(23px, 4.8vw, 31px);
+}
+
+/*
+ * 1問目は「お題 → 余白 → 質問 → 入力 → 次へ」の順で
+ * 画面の下側に質問部分を配置します。
+ */
+#screen3 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen3 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen3 .question-content {
+  flex: 0 0 auto;
+  width: min(100%, 816px);
+  padding-top: 0;
+  margin-top: auto;
+}
+
+#screen3 .question-content h2 {
+  margin: 0 0 30px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen3 .text-input {
+  min-height: 82px;
+  font-size: 20px;
+}
+
+#screen3 .full {
+  min-height: 70px;
+  margin-top: 26px;
+  font-size: 24px;
+}
+
+
+/* 2〜4問目：これまでの回答表示枠 */
+#screen4 .question-inner,
+#screen5 .question-inner,
+#screen6 .question-inner {
+  width: min(100% - 34px, 816px);
+}
+
+#screen4 .keyword-tracker,
+#screen5 .keyword-tracker,
+#screen6 .keyword-tracker {
+  width: min(100%, 690px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 28px;
+}
+
+#screen4 .keyword-card,
+#screen5 .keyword-card,
+#screen6 .keyword-card {
+  min-height: 108px;
+  padding: 12px 8px;
+  border-radius: 0;
+  border-color: #b8b8b8;
+}
+
+#screen4 .keyword-card + .keyword-card,
+#screen5 .keyword-card + .keyword-card,
+#screen6 .keyword-card + .keyword-card {
+  border-left: 0;
+}
+
+#screen4 .keyword-label,
+#screen5 .keyword-label,
+#screen6 .keyword-label {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+#screen4 .keyword-value,
+#screen5 .keyword-value,
+#screen6 .keyword-value {
+  font-size: clamp(23px, 4.8vw, 31px);
+}
+
+/*
+ * 赤枠部分に相当する表示欄です。
+ * 実際の画面では赤い線を付けず、固定サイズだけを使います。
+ */
+.previous-answers {
+  width: 100%;
+  height: 190px;
+  flex: 0 0 190px;
+  padding: 14px 30px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 2〜4問目も、質問部分を画面下側へまとめて配置 */
+#screen4 .question-inner,
+#screen5 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen4 .genre-instruction,
+#screen5 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen4 .keyword-tracker,
+#screen5 .keyword-tracker {
+  flex: 0 0 auto;
+}
+
+#screen4 .question-content,
+#screen5 .question-content {
+  width: 100%;
+  padding-top: 0;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#screen4 .previous-answers,
+#screen5 .previous-answers {
+  align-self: center;
+  margin-bottom: 12px;
+}
+
+#screen4 .question-content h2,
+#screen5 .question-content h2 {
+  margin: 0 0 18px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen4 .textarea,
+#screen5 .textarea {
+  min-height: 105px;
+  height: 105px;
+  resize: none;
+  font-size: 18px;
+}
+
+#screen4 .hint,
+#screen5 .hint {
+  margin: 8px 0 0;
+}
+
+#screen4 .full,
+#screen5 .full {
+  min-height: 60px;
+  margin-top: 18px;
+  font-size: 22px;
+}
+
+/* 4問目は同じ表示枠を使い、画面が大きい場合は自然な配置にします */
+#screen6 .question-content {
+  width: 100%;
+  padding-top: 0;
+}
+
+#screen6 .previous-answers {
+  margin-bottom: 18px;
+}
+
+#screen6 .question-content h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen6 .text-input {
+  font-size: 18px;
+}
+
+#screen6 .full {
+  margin-top: 18px;
+}
+
+/* 縦が短いスマホではさらに圧縮 */
+@media (max-height: 760px) {
+  #screen3 .question-inner,
+  #screen4 .question-inner,
+  #screen5 .question-inner {
+    padding-top: 43px;
+    padding-bottom: 16px;
+  }
+
+  #screen3 .keyword-tracker,
+  #screen4 .keyword-tracker,
+  #screen5 .keyword-tracker {
+    margin-top: 20px;
+  }
+
+  #screen3 .keyword-card,
+  #screen4 .keyword-card,
+  #screen5 .keyword-card {
+    min-height: 86px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  #screen3 .keyword-label,
+  #screen4 .keyword-label,
+  #screen5 .keyword-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  #screen3 .keyword-value,
+  #screen4 .keyword-value,
+  #screen5 .keyword-value {
+    font-size: 22px;
+  }
+
+  #screen4 .previous-answers,
+  #screen5 .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+  }
+
+  #screen4 .question-content,
+  #screen5 .question-content {
+    margin-top: 8px;
+  }
+
+  #screen4 .question-content h2,
+  #screen5 .question-content h2,
+  #screen3 .question-content h2 {
+    margin-bottom: 12px;
+    font-size: clamp(22px, 5.5vw, 30px);
+  }
+
+  #screen4 .textarea,
+  #screen5 .textarea {
+    min-height: 82px;
+    height: 82px;
+  }
+
+  #screen3 .text-input {
+    min-height: 62px;
+  }
+
+  #screen3 .full,
+  #screen4 .full,
+  #screen5 .full {
+    min-height: 52px;
+    margin-top: 12px;
+    font-size: 19px;
+  }
+}
+
+/* 幅の狭いスマホでも3つのお題を1列に戻さない */
+@media (max-width: 420px) {
+  #screen3 .question-inner,
+  #screen4 .question-inner,
+  #screen5 .question-inner {
+    width: min(100% - 28px, 816px);
+  }
+
+  #screen3 .keyword-tracker,
+  #screen4 .keyword-tracker,
+  #screen5 .keyword-tracker {
+    width: 100%;
+  }
+
+  #screen3 .keyword-card,
+  #screen4 .keyword-card,
+  #screen5 .keyword-card {
+    min-width: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  #screen3 .keyword-label,
+  #screen4 .keyword-label,
+  #screen5 .keyword-label {
+    font-size: 11px;
+  }
+
+  #screen3 .keyword-value,
+  #screen4 .keyword-value,
+  #screen5 .keyword-value {
+    font-size: 20px;
+  }
+
+  .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+    padding: 12px 18px;
+  }
+}
+
+
+/* 4問目も入力欄までスクロールなしで見えるように調整 */
+#screen6 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen6 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen6 .keyword-tracker {
+  flex: 0 0 auto;
+  margin-top: 28px;
+}
+
+#screen6 .question-content {
+  flex: 0 0 auto;
+  margin-top: 12px;
+}
+
+@media (max-height: 760px) {
+  #screen6 .question-inner {
+    padding-top: 43px;
+    padding-bottom: 16px;
+  }
+
+  #screen6 .keyword-tracker {
+    margin-top: 20px;
+  }
+
+  #screen6 .keyword-card {
+    min-height: 86px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  #screen6 .keyword-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  #screen6 .keyword-value {
+    font-size: 22px;
+  }
+
+  #screen6 .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+    margin-bottom: 10px;
+  }
+
+  #screen6 .question-content h2 {
+    margin-bottom: 10px;
+    font-size: clamp(22px, 5.5vw, 30px);
+  }
+
+  #screen6 .text-input {
+    min-height: 62px;
+  }
+
+  #screen6 .keyword-error {
+    min-height: 16px;
+    margin: 6px 0 -4px;
+  }
+
+  #screen6 .full {
+    min-height: 52px;
+    margin-top: 10px;
+    font-size: 19px;
+  }
+}
+
+
+/* 表示欄の高さは参考画像に合わせて固定します（短い画面でも変更しません）。 */
+#screen4 .previous-answers,
+#screen5 .previous-answers,
+#screen6 .previous-answers {
+  height: 190px;
+  flex-basis: 190px;
+}
+
+@media (max-height: 760px) {
+  #screen4 .previous-answers,
+  #screen5 .previous-answers,
+  #screen6 .previous-answers {
+    height: 190px;
+    flex-basis: 190px;
+  }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>待ち時間で創作する</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="app">
+
+  <!-- 進捗バー：画面2以降に表示 -->
+  <div id="questionProgress" class="question-progress" aria-label="質問の進捗">
+    <div id="step1" class="question-step">第１問</div>
+    <div id="step2" class="question-step">第２問</div>
+    <div id="step3" class="question-step">第３問</div>
+    <div id="step4" class="question-step">第４問</div>
+    <div id="step5" class="question-step">タイトル</div>
+    <div id="step6" class="question-step">名前</div>
+  </div>
+
+  <!-- 画面1：説明ページ -->
+  <section id="screen0" class="screen active">
+    <div class="screen-inner intro-screen">
+      <div class="intro-frame">
+        <h1>これは待ち時間で簡単な<br>物語を創作できるツールです</h1>
+
+        <div class="intro-example-grid">
+          <div class="intro-example-card solo-card">
+            <img class="intro-border intro-border-left" src="./intro-border-left.png" alt="" aria-hidden="true">
+            <div class="intro-card-copy">
+              <div class="intro-card-title">一人で遊ぶ</div>
+              <p>１人でお題に回答して<br>物語を創作する</p>
+            </div>
+            <div class="intro-illustration">
+              <img id="soloIllustration" src="./Webうさぎ.PNG" alt="一人で遊ぶイラスト">
+            </div>
+          </div>
+
+          <div class="intro-example-card friends-card">
+            <img class="intro-border intro-border-left" src="./intro-border-left.png" alt="" aria-hidden="true">
+            <div class="intro-card-copy">
+              <div class="intro-card-title">友達と遊ぶ</div>
+              <p>お題ごとに回答者を<br>交代して物語を創作する</p>
+            </div>
+            <div class="intro-illustration">
+              <img id="friendsIllustration" src="./Webうさぎ2.PNG" alt="友達と遊ぶイラスト">
+            </div>
+          </div>
+        </div>
+
+        <button type="button" id="introStartButton" class="button primary intro-start">はじめる</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面2：お題の難易度を選択 -->
+  <section id="screen1" class="screen">
+    <div class="screen-inner start-screen">
+      <h1>どちらのお題で<br>物語をつくりますか？</h1>
+
+      <div class="choice-list">
+        <button type="button" class="choice-button" data-mode="normal">
+          <span class="button-title">かんたん</span>
+          <span class="button-note">日常で使う単語で出題されます</span>
+        </button>
+
+        <button type="button" class="choice-button" data-mode="difficult">
+          <span class="button-title">むずかしい</span>
+          <span class="button-note">日常では使わない単語で出題されます<br>挑戦したいときにおすすめです</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画面3：お題を決める -->
+  <section id="screen2" class="screen">
+    <div class="screen-inner">
+      <div class="screen2-body">
+        <h2>ジャンルは<span id="genre2Text"></span>で<br>この3つを必ず登場させてください</h2>
+
+        <div class="word-list">
+          <div class="word-card"><div class="word-label">登場人物</div><div id="person2" class="word-value"></div></div>
+          <div class="word-card"><div class="word-label">もの・場所</div><div id="place2" class="word-value"></div></div>
+          <div class="word-card"><div class="word-label">できごと</div><div id="event2" class="word-value"></div></div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="redrawButton" class="button secondary">引き直す</button>
+          <button type="button" id="startButton" class="button primary">はじめる</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第1問 -->
+  <section id="screen3" class="screen">
+    <div class="screen-inner question-inner">
+      <p id="genreInstruction3" class="genre-instruction">ジャンルは<span></span>でこの3つを必ず登場させてください。</p>
+      <div class="keyword-tracker" aria-label="使用するお題">
+        <div id="keywordPerson3" class="keyword-card">
+          <div class="keyword-label">登場人物</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordPlace3" class="keyword-card">
+          <div class="keyword-label">もの・場所</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordEvent3" class="keyword-card">
+          <div class="keyword-label">できごと</div>
+          <div class="keyword-value"></div>
+        </div>
+      </div>
+      <div class="question-content">
+        <h2>この物語の主人公は？</h2>
+        <input id="heroInput" class="text-input" type="text" maxlength="40" autocomplete="off">
+        <button type="button" id="next3" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第2問 -->
+  <section id="screen4" class="screen">
+    <div class="screen-inner question-inner">
+      <p id="genreInstruction4" class="genre-instruction">ジャンルは<span></span>でこの3つを必ず登場させてください。</p>
+      <div class="keyword-tracker" aria-label="使用するお題">
+        <div id="keywordPerson4" class="keyword-card">
+          <div class="keyword-label">登場人物</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordPlace4" class="keyword-card">
+          <div class="keyword-label">もの・場所</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordEvent4" class="keyword-card">
+          <div class="keyword-label">できごと</div>
+          <div class="keyword-value"></div>
+        </div>
+      </div>
+      <div class="question-content">
+        <div id="previousAnswers4" class="previous-answers" aria-label="これまでの回答"></div>
+        <h2>主人公に、何が起こる？</h2>
+        <textarea id="happeningInput" class="text-input textarea" maxlength="300"></textarea>
+        <p class="hint">物語の「起」の部分です</p>
+        <button type="button" id="next4" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第3問 -->
+  <section id="screen5" class="screen">
+    <div class="screen-inner question-inner">
+      <p id="genreInstruction5" class="genre-instruction">ジャンルは<span></span>でこの3つを必ず登場させてください。</p>
+      <div class="keyword-tracker" aria-label="使用するお題">
+        <div id="keywordPerson5" class="keyword-card">
+          <div class="keyword-label">登場人物</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordPlace5" class="keyword-card">
+          <div class="keyword-label">もの・場所</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordEvent5" class="keyword-card">
+          <div class="keyword-label">できごと</div>
+          <div class="keyword-value"></div>
+        </div>
+      </div>
+      <div class="question-content">
+        <div id="previousAnswers5" class="previous-answers" aria-label="これまでの回答"></div>
+        <h2>そのあと、どうなる？</h2>
+        <textarea id="afterInput" class="text-input textarea" maxlength="300"></textarea>
+        <p class="hint">物語の「承」「転」の部分です</p>
+        <button type="button" id="next5" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第4問 -->
+  <section id="screen6" class="screen">
+    <div class="screen-inner question-inner">
+      <p id="genreInstruction6" class="genre-instruction">ジャンルは<span></span>でこの3つを必ず登場させてください。</p>
+      <div class="keyword-tracker" aria-label="使用するお題">
+        <div id="keywordPerson6" class="keyword-card">
+          <div class="keyword-label">登場人物</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordPlace6" class="keyword-card">
+          <div class="keyword-label">もの・場所</div>
+          <div class="keyword-value"></div>
+        </div>
+        <div id="keywordEvent6" class="keyword-card">
+          <div class="keyword-label">できごと</div>
+          <div class="keyword-value"></div>
+        </div>
+      </div>
+      <div class="question-content">
+        <div id="previousAnswers6" class="previous-answers" aria-label="これまでの回答"></div>
+        <h2>この物語を、一言で終わらせてください</h2>
+        <input id="endingInput" class="text-input" type="text" maxlength="120">
+        <p class="hint">物語の「結」の部分です</p>
+        <p id="keywordError" class="keyword-error" aria-live="polite"></p>
+        <button type="button" id="next6" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第5問：タイトル -->
+  <section id="screen7" class="screen">
+    <div class="screen-inner question-inner extra-question">
+      <div class="question-content">
+        <h2>この物語に<br>タイトルをつけるとしたら？</h2>
+        <p class="question-description">物語のタイトルを教えてください。</p>
+        <input id="titleInput" class="text-input" type="text" maxlength="40" autocomplete="off" placeholder="ここにタイトルを入力してください">
+        <button type="button" id="next7" class="button primary full">次へ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第6問：名前 -->
+  <section id="screen8" class="screen">
+    <div class="screen-inner question-inner extra-question">
+      <div class="question-content">
+        <h2>あなたの名前を<br>教えてください</h2>
+        <p class="question-description">本の著者として表示する名前を教えてください。</p>
+        <input id="authorInput" class="text-input" type="text" maxlength="30" autocomplete="off" placeholder="ここに名前を入力してください">
+        <button type="button" id="finishButton" class="button primary full">完成する</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 完成画面：本の表紙 -->
+  <section id="screen9" class="screen">
+    <div class="screen-inner final-screen">
+      <h1>あなたの本が出版されました。</h1>
+      <div class="book-cover" id="bookCover">
+        <img id="finalCoverImage" class="book-cover-image" src="./ホラー表紙.JPG" alt="完成した本の表紙">
+        <div class="book-cover-top">
+          <div id="finalTitle" class="book-title"></div>
+          <div id="finalAuthor" class="book-author"></div>
+        </div>
+        <div class="book-band">
+          <p id="finalStorySummary" class="book-summary"></p>
+          <p id="finalTagline" class="book-tagline"></p>
+        </div>
+      </div>
+      <div class="final-actions">
+        <button type="button" id="restartButton" class="button primary">もう一度</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="./script.js" defer></script>
+</body>
+</html>

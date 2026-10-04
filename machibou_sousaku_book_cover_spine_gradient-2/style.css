@@ -1,0 +1,1192 @@
+/* =========================================================
+   色や文字の大きさを変更したい場合は、このファイルを変更します。
+   ========================================================= */
+:root {
+  --bg: #ffffff;
+  --text: #20242a;
+  --muted: #7a818a;
+  --line: #d8dde3;
+  --line-dark: #aeb6bf;
+  --blue: #246bce;       /* 進捗バーの青 */
+  --button: #20242a;
+  --danger: #c93b3b;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--bg); }
+body {
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Noto Sans JP", Meiryo, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.app { min-height: 100vh; background: var(--bg); }
+
+
+/* 4分割の質問進捗バー */
+.question-progress {
+  display: none;
+  position: fixed; top: 0; left: 0; z-index: 25;
+  width: 100%; height: 34px;
+  padding: 0;
+  background: transparent;
+  grid-template-columns: repeat(4, 1fr);
+}
+.question-progress.visible { display: grid; }
+.question-step {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  min-width: 0; min-height: 34px;
+  margin: 0;
+  padding: 0 8px 0 12px;
+  color: #ffffff;
+  background: #b6bcc3;
+  border: 0;
+  font-size: clamp(8px, 2.15vw, 11px);
+  font-weight: 700;
+  letter-spacing: .02em;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%, 9px 50%);
+}
+.question-step:first-child {
+  padding-left: 8px;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%);
+}
+.question-step:last-child {
+  padding-right: 8px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 9px 50%);
+}
+.question-step.done { background: var(--blue); }
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+.screen-inner { width: min(100% - 34px, 620px); margin: 0 auto; padding: 70px 0 55px; }
+
+/* 説明ページ */
+.intro-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 34px;
+  padding-bottom: 34px;
+}
+.intro-frame { width: 100%; }
+.intro-frame h1 {
+  margin: 0 0 72px;
+  text-align: center;
+  font-size: clamp(28px, 4.3vw, 42px);
+  line-height: 1.58;
+  letter-spacing: -.05em;
+}
+.intro-example-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(34px, 7vw, 78px);
+  align-items: end;
+  margin: 0 auto 54px;
+  width: min(100%, 900px);
+}
+.intro-example-card {
+  position: relative;
+  min-width: 0;
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  isolation: isolate;
+}
+.intro-border {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.intro-border-left {
+  width: 100%;
+  transform: translate(-2%, -3%);
+}
+.intro-border-right {
+  width: 108%;
+  left: -4%;
+  transform: translateY(-1%);
+}
+.intro-card-copy {
+  position: relative;
+  z-index: 1;
+  min-height: 172px;
+  padding: 54px 18px 14px;
+  border: 0;
+  text-align: center;
+}
+.intro-card-copy::after { content: none; }
+.intro-card-title {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 26px;
+  font-size: clamp(19px, 2.7vw, 25px);
+  font-weight: 700;
+}
+.intro-example-card p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(14px, 2.05vw, 17px);
+  line-height: 1.95;
+}
+.intro-illustration {
+  position: relative;
+  z-index: 2;
+  height: 190px;
+  margin-top: 2px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+.intro-illustration img {
+  display: block;
+  width: min(100%, 300px);
+  max-height: 190px;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.intro-start {
+  display: block;
+  width: min(100%, 500px);
+  min-height: 67px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+
+/* 難易度選択 */
+.start-screen {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding-top: 30px;
+}
+.start-screen h1 {
+  margin: 0 0 50px; text-align: center;
+  font-size: clamp(27px, 7vw, 38px); line-height: 1.55; letter-spacing: -.04em;
+}
+.choice-list { display: grid; gap: 42px; }
+.choice-button {
+  width: min(100%, 330px); margin: 0 auto; padding: 18px 18px 12px;
+  background: #fff; border: 1.5px solid #333; border-radius: 2px;
+  color: var(--text); text-align: center; cursor: pointer;
+}
+.choice-button:active, .button:active { transform: translateY(1px); }
+.button-title { display: block; font-size: 24px; font-weight: 700; }
+.button-note { display: block; margin-top: 9px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+/* 共通 */
+
+/* 画面3〜6のお題表示。
+   使用済みになったお題には .used が付き、グレーで塗りつぶされます。 */
+.keyword-tracker {
+  width: min(100%, 470px);
+  margin: 34px auto 0;
+  display: grid;
+  gap: 14px;
+}
+.keyword-card {
+  min-height: 88px;
+  padding: 15px 18px;
+  border: 1px solid var(--line-dark);
+  border-radius: 2px;
+  background: #fff;
+  text-align: center;
+  transition: background .15s ease, color .15s ease;
+}
+.keyword-card.used {
+  background: #b6bcc3;
+}
+.keyword-label {
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.keyword-value {
+  min-height: 28px;
+  color: var(--text);
+  font-size: 23px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.screen2-body, .question-content { width: min(100%, 470px); margin: 0 auto; }
+.screen2-body { padding-top: 74px; }
+.screen2-body h2, .question-content h2 {
+  margin: 0 0 30px; text-align: center;
+  font-size: clamp(22px, 5.7vw, 30px); line-height: 1.55; letter-spacing: -.04em;
+}
+.word-list { display: grid; gap: 14px; margin-bottom: 36px; }
+.word-card { padding: 17px 18px; border: 1px solid var(--line-dark); border-radius: 2px; text-align: center; }
+.word-label { margin-bottom: 8px; color: var(--muted); font-size: 12px; }
+.word-value { min-height: 29px; font-size: 23px; font-weight: 700; }
+
+.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.button {
+  min-height: 54px; border-radius: 3px; border: 1px solid var(--text);
+  cursor: pointer; font-size: 17px; font-weight: 700;
+}
+.button.primary { color: #fff; background: var(--button); border-color: var(--button); }
+.button.secondary { color: var(--text); background: #fff; border-color: #7d858e; }
+
+.question-inner { padding-top: 82px; }
+.genre-instruction {
+  width: min(100%, 470px);
+  margin: 0 auto 18px;
+  text-align: center;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -.03em;
+}
+.question-content { padding-top: 82px; }
+.question-content h2 { margin-bottom: 36px; }
+.text-input {
+  display: block; width: 100%; min-height: 62px; padding: 14px 15px;
+  color: var(--text); background: #fff; border: 1px solid #8e969e;
+  border-radius: 3px; outline: none; font-size: 18px;
+}
+.text-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36,107,206,.12); }
+.text-input.invalid { border: 2px solid var(--danger); box-shadow: none; }
+.textarea { min-height: 125px; resize: vertical; line-height: 1.7; }
+.context-block { margin-bottom: 25px; }
+.context-label { margin-bottom: 6px; color: var(--muted); font-size: 13px; font-weight: 700; }
+.context-value { font-size: 21px; font-weight: 700; line-height: 1.6; overflow-wrap: anywhere; }
+.hint { margin: 10px 0 0; color: var(--muted); text-align: center; font-size: 13px; }
+.keyword-error {
+  min-height: 20px;
+  margin: 12px 0 -8px;
+  color: var(--danger);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.full { width: 100%; margin-top: 25px; }
+
+/* 完成画面 */
+.final-screen {
+  width: min(100% - 28px, 760px);
+  padding-top: 42px;
+  padding-bottom: 46px;
+}
+
+.final-screen h1 {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: clamp(28px, 7vw, 42px);
+  line-height: 1.35;
+  letter-spacing: -.05em;
+}
+
+.final-genre {
+  margin-bottom: 28px;
+  text-align: center;
+  color: var(--text);
+}
+
+.final-genre span {
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 700;
+}
+
+.final-genre strong {
+  font-size: clamp(20px, 4.5vw, 28px);
+  font-weight: 700;
+}
+
+.final-story-card {
+  position: relative;
+  width: min(100%, 610px);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.final-genre-background {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.final-story-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10% 10%;
+  box-sizing: border-box;
+}
+
+.final-story-text {
+  width: 100%;
+  min-height: 14%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #111;
+  font-size: clamp(15px, 3.2vw, 24px);
+  font-weight: 500;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.final-actions {
+  width: min(100%, 610px);
+  margin: 28px auto 0;
+}
+
+.final-actions .button {
+  width: 100%;
+  min-height: 60px;
+  font-size: clamp(18px, 4vw, 24px);
+}
+
+@media (min-width: 700px) {
+  .screen-inner { padding-top: 88px; }
+  .question-content { padding-top: 92px; }
+  .screen2-body { padding-top: 90px; }
+}
+
+@media (max-width: 620px) {
+  .intro-screen { align-items: flex-start; }
+  .intro-frame h1 { margin-bottom: 44px; }
+  .intro-example-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    width: min(100%, 390px);
+    margin-bottom: 40px;
+  }
+  .intro-example-card { min-height: 290px; }
+  .intro-card-copy { min-height: 155px; padding-top: 48px; }
+  .intro-card-title { margin-bottom: 16px; }
+  .intro-illustration { height: 175px; }
+  .intro-illustration img { max-height: 175px; width: min(100%, 320px); }
+  .intro-start { min-height: 60px; }
+}
+
+@media (max-width: 420px) {
+  .intro-example-card { min-height: 270px; }
+  .intro-card-copy { padding-top: 43px; }
+}
+
+@media (max-width: 420px) {
+  .screen-inner { width: min(100% - 28px, 620px); }
+  .genre-instruction { margin-bottom: 14px; font-size: 14px; }
+  .question-content { padding-top: 70px; }
+  .question-step { font-size: 14px; }
+}
+
+/* ============================================================
+   追加：タイトル・著者入力と本の表紙風の完成画面
+   ============================================================ */
+.question-description {
+  margin: -12px 0 24px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.extra-question .question-content { padding-top: 110px; }
+
+/* 6段階になった進捗バー */
+.question-progress { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.question-step {
+  font-size: clamp(10px, 2.4vw, 17px);
+  padding-left: 14px;
+  padding-right: 10px;
+}
+.question-step:first-child { padding-left: 8px; }
+.question-step:last-child { padding-right: 8px; }
+
+/* 本の表紙 */
+.book-cover {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 3 / 4;
+  margin: 30px auto 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 12px 16px 24px rgba(0, 0, 0, .28), 2px 3px 5px rgba(0, 0, 0, .18);
+}
+.book-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.book-cover-top {
+  position: absolute;
+  inset: 0 0 33.333% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 9% 12%;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,.65);
+}
+.book-title {
+  max-width: 100%;
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.book-author {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 28px;
+  font-size: clamp(13px, 2.8vw, 18px);
+}
+.book-author strong { font-size: clamp(18px, 3.8vw, 27px); }
+.book-band {
+  position: absolute;
+  inset: 66.667% 0 0 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8% 9%;
+  box-sizing: border-box;
+}
+.book-band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.book-band p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(12px, 2.5vw, 19px);
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+
+@media (max-width: 420px) {
+  .question-step { font-size: 9px; padding-left: 8px; padding-right: 5px; }
+  .question-step:first-child, .question-step:last-child { padding-left: 5px; padding-right: 5px; }
+  .book-cover { width: min(100%, 360px); }
+  .book-cover-top { padding-left: 10%; padding-right: 10%; }
+  .book-band { padding: 7% 8%; }
+  .book-band p { font-size: 11px; }
+}
+
+/* ============================================================
+   最終ページ：ジャンル別の本の表紙
+   帯は画像ではなく、ジャンルごとの単色で表示します。
+   ============================================================ */
+.final-screen h1 {
+  margin-bottom: 30px;
+}
+
+.book-cover {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 12px 16px 24px rgba(0, 0, 0, .28), 2px 3px 5px rgba(0, 0, 0, .18);
+}
+
+.book-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-cover-top {
+  position: absolute;
+  inset: 0 0 33.333% 0;
+  padding: 6%;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,.55);
+}
+
+.book-title,
+.book-author {
+  position: absolute;
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.15;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.book-title {
+  font-size: clamp(30px, 7vw, 56px);
+  text-align: start;
+}
+
+.book-author {
+  font-size: clamp(18px, 4vw, 30px);
+  font-weight: 700;
+}
+
+/* SF：タイトル右上、著者左下 */
+.book-cover[data-genre="SF"] .book-title {
+  top: 7%;
+  right: 8%;
+  color: #fff;
+}
+.book-cover[data-genre="SF"] .book-author {
+  left: 8%;
+  bottom: 7%;
+  color: #fff;
+}
+
+/* ミステリー：緑の文字、タイトル右上、著者左下 */
+.book-cover[data-genre="ミステリー"] .book-title {
+  top: 7%;
+  right: 8%;
+  color: #168b22;
+  text-shadow: none;
+}
+.book-cover[data-genre="ミステリー"] .book-author {
+  left: 8%;
+  bottom: 7%;
+  color: #168b22;
+  text-shadow: none;
+}
+
+/* コメディ：緑の文字、右上。2列になった場合も頭揃え */
+.book-cover[data-genre="コメディ"] .book-title {
+  top: 8%;
+  right: 8%;
+  color: #3d8d18;
+  text-shadow: none;
+  text-align: start;
+}
+.book-cover[data-genre="コメディ"] .book-author {
+  top: 8%;
+  right: 29%;
+  color: #3d8d18;
+  text-shadow: none;
+}
+
+/* 恋愛：タイトル中央、著者も中央で下揃え */
+.book-cover[data-genre="恋愛"] .book-title {
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+.book-cover[data-genre="恋愛"] .book-author {
+  left: 50%;
+  bottom: 7%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+
+/* ホラー：タイトル中央、著者は左側で頭揃え */
+.book-cover[data-genre="ホラー"] .book-title {
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+.book-cover[data-genre="ホラー"] .book-author {
+  top: 12%;
+  left: 8%;
+  color: #fff;
+}
+
+.book-band {
+  position: absolute;
+  inset: 66.667% 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 3%;
+  padding: 6% 7% 5%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.book-band p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.book-summary {
+  flex: 0 0 46%;
+  min-height: 0;
+  font-size: clamp(13px, 2.9vw, 21px);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+  overflow: hidden;
+}
+
+.book-tagline {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(17px, 3.6vw, 30px);
+  font-weight: 900;
+  line-height: 1.28;
+  text-align: center;
+  white-space: pre-line;
+  overflow: hidden;
+}
+
+.book-cover[data-genre="SF"] .book-band { background: #fff; color: #222; }
+.book-cover[data-genre="SF"] .book-tagline { color: #111; }
+
+.book-cover[data-genre="ホラー"] .book-band { background: #e71919; color: #fff; }
+.book-cover[data-genre="ホラー"] .book-tagline { color: #fff; }
+
+.book-cover[data-genre="恋愛"] .book-band { background: #BF436B; color: #fff; }
+.book-cover[data-genre="恋愛"] .book-tagline { color: #e51c23; }
+
+.book-cover[data-genre="コメディ"] .book-band { background: #ff9b43; color: #222; }
+.book-cover[data-genre="コメディ"] .book-tagline { color: #e51c23; }
+
+/* ミステリー */
+.book-cover[data-genre="ミステリー"] .book-band { background: #F0B13D; color: #222; }
+.book-cover[data-genre="ミステリー"] .book-tagline { color: #ff3030; }
+
+@media (max-width: 420px) {
+  .book-cover { width: min(100%, 360px); }
+  .book-cover-top { padding: 5%; }
+  .book-summary { font-size: 12px; }
+  .book-tagline { font-size: 15px; }
+}
+
+/* ============================================================
+   最終ページ：SF・恋愛の追加調整
+   ============================================================ */
+
+/* SF：ストーリー本文は #5E5E5E、ドロップシャドウなし */
+.book-cover[data-genre="SF"] .book-summary {
+  color: #5E5E5E;
+  text-shadow: none;
+}
+
+/* 恋愛：著者名をタイトルと同じ高さの左上に配置 */
+.book-cover[data-genre="恋愛"] .book-author {
+  top: 8%;
+  left: 8%;
+  bottom: auto;
+  transform: none;
+}
+
+/* 恋愛：帯色と固定文の文字色 */
+.book-cover[data-genre="恋愛"] .book-band {
+  background: #EB539F;
+}
+.book-cover[data-genre="恋愛"] .book-tagline {
+  color: #fff;
+}
+
+/* ============================================================
+   最終ページ：本の背の丸み表現
+   表紙画像と帯の右端に、約10px幅のグレー系グラデーションを重ねます。
+   右端の黒から左方向へ透明になることで、本の背の曲面を表現します。
+   ============================================================ */
+.book-cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.58) 0%,
+    rgba(0, 0, 0, 0.38) 28%,
+    rgba(0, 0, 0, 0.16) 62%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+
+/* ============================================================
+   1〜4問目：スマホでも1画面に収まる質問レイアウト
+   参考画像に合わせ、1問目のお題は横3列、
+   2〜4問目はこれまでの回答だけを固定枠内に表示します。
+   ============================================================ */
+
+/* 1問目：お題を横並びにする */
+#screen3 .keyword-tracker {
+  width: min(100%, 690px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 28px;
+}
+
+#screen3 .keyword-card {
+  min-height: 108px;
+  padding: 12px 8px;
+  border-radius: 0;
+  border-color: #b8b8b8;
+}
+
+#screen3 .keyword-card + .keyword-card {
+  border-left: 0;
+}
+
+#screen3 .keyword-label {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+#screen3 .keyword-value {
+  font-size: clamp(23px, 4.8vw, 31px);
+}
+
+/*
+ * 1問目は「お題 → 余白 → 質問 → 入力 → 次へ」の順で
+ * 画面の下側に質問部分を配置します。
+ */
+#screen3 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen3 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen3 .question-content {
+  flex: 0 0 auto;
+  width: min(100%, 816px);
+  padding-top: 0;
+  margin-top: auto;
+}
+
+#screen3 .question-content h2 {
+  margin: 0 0 30px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen3 .text-input {
+  min-height: 82px;
+  font-size: 20px;
+}
+
+#screen3 .full {
+  min-height: 70px;
+  margin-top: 26px;
+  font-size: 24px;
+}
+
+
+/* 2〜4問目：これまでの回答表示枠 */
+#screen4 .question-inner,
+#screen5 .question-inner,
+#screen6 .question-inner {
+  width: min(100% - 34px, 816px);
+}
+
+#screen4 .keyword-tracker,
+#screen5 .keyword-tracker,
+#screen6 .keyword-tracker {
+  width: min(100%, 690px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 28px;
+}
+
+#screen4 .keyword-card,
+#screen5 .keyword-card,
+#screen6 .keyword-card {
+  min-height: 108px;
+  padding: 12px 8px;
+  border-radius: 0;
+  border-color: #b8b8b8;
+}
+
+#screen4 .keyword-card + .keyword-card,
+#screen5 .keyword-card + .keyword-card,
+#screen6 .keyword-card + .keyword-card {
+  border-left: 0;
+}
+
+#screen4 .keyword-label,
+#screen5 .keyword-label,
+#screen6 .keyword-label {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+#screen4 .keyword-value,
+#screen5 .keyword-value,
+#screen6 .keyword-value {
+  font-size: clamp(23px, 4.8vw, 31px);
+}
+
+/*
+ * 赤枠部分に相当する表示欄です。
+ * 実際の画面では赤い線を付けず、固定サイズだけを使います。
+ */
+.previous-answers {
+  width: 100%;
+  height: 190px;
+  flex: 0 0 190px;
+  padding: 14px 30px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 2〜4問目も、質問部分を画面下側へまとめて配置 */
+#screen4 .question-inner,
+#screen5 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen4 .genre-instruction,
+#screen5 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen4 .keyword-tracker,
+#screen5 .keyword-tracker {
+  flex: 0 0 auto;
+}
+
+#screen4 .question-content,
+#screen5 .question-content {
+  width: 100%;
+  padding-top: 0;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#screen4 .previous-answers,
+#screen5 .previous-answers {
+  align-self: center;
+  margin-bottom: 12px;
+}
+
+#screen4 .question-content h2,
+#screen5 .question-content h2 {
+  margin: 0 0 18px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen4 .textarea,
+#screen5 .textarea {
+  min-height: 105px;
+  height: 105px;
+  resize: none;
+  font-size: 18px;
+}
+
+#screen4 .hint,
+#screen5 .hint {
+  margin: 8px 0 0;
+}
+
+#screen4 .full,
+#screen5 .full {
+  min-height: 60px;
+  margin-top: 18px;
+  font-size: 22px;
+}
+
+/* 4問目は同じ表示枠を使い、画面が大きい場合は自然な配置にします */
+#screen6 .question-content {
+  width: 100%;
+  padding-top: 0;
+}
+
+#screen6 .previous-answers {
+  margin-bottom: 18px;
+}
+
+#screen6 .question-content h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: clamp(25px, 5.8vw, 38px);
+}
+
+#screen6 .text-input {
+  font-size: 18px;
+}
+
+#screen6 .full {
+  margin-top: 18px;
+}
+
+/* 縦が短いスマホではさらに圧縮 */
+@media (max-height: 760px) {
+  #screen3 .question-inner,
+  #screen4 .question-inner,
+  #screen5 .question-inner {
+    padding-top: 43px;
+    padding-bottom: 16px;
+  }
+
+  #screen3 .keyword-tracker,
+  #screen4 .keyword-tracker,
+  #screen5 .keyword-tracker {
+    margin-top: 20px;
+  }
+
+  #screen3 .keyword-card,
+  #screen4 .keyword-card,
+  #screen5 .keyword-card {
+    min-height: 86px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  #screen3 .keyword-label,
+  #screen4 .keyword-label,
+  #screen5 .keyword-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  #screen3 .keyword-value,
+  #screen4 .keyword-value,
+  #screen5 .keyword-value {
+    font-size: 22px;
+  }
+
+  #screen4 .previous-answers,
+  #screen5 .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+  }
+
+  #screen4 .question-content,
+  #screen5 .question-content {
+    margin-top: 8px;
+  }
+
+  #screen4 .question-content h2,
+  #screen5 .question-content h2,
+  #screen3 .question-content h2 {
+    margin-bottom: 12px;
+    font-size: clamp(22px, 5.5vw, 30px);
+  }
+
+  #screen4 .textarea,
+  #screen5 .textarea {
+    min-height: 82px;
+    height: 82px;
+  }
+
+  #screen3 .text-input {
+    min-height: 62px;
+  }
+
+  #screen3 .full,
+  #screen4 .full,
+  #screen5 .full {
+    min-height: 52px;
+    margin-top: 12px;
+    font-size: 19px;
+  }
+}
+
+/* 幅の狭いスマホでも3つのお題を1列に戻さない */
+@media (max-width: 420px) {
+  #screen3 .question-inner,
+  #screen4 .question-inner,
+  #screen5 .question-inner {
+    width: min(100% - 28px, 816px);
+  }
+
+  #screen3 .keyword-tracker,
+  #screen4 .keyword-tracker,
+  #screen5 .keyword-tracker {
+    width: 100%;
+  }
+
+  #screen3 .keyword-card,
+  #screen4 .keyword-card,
+  #screen5 .keyword-card {
+    min-width: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  #screen3 .keyword-label,
+  #screen4 .keyword-label,
+  #screen5 .keyword-label {
+    font-size: 11px;
+  }
+
+  #screen3 .keyword-value,
+  #screen4 .keyword-value,
+  #screen5 .keyword-value {
+    font-size: 20px;
+  }
+
+  .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+    padding: 12px 18px;
+  }
+}
+
+
+/* 4問目も入力欄までスクロールなしで見えるように調整 */
+#screen6 .question-inner {
+  height: 100svh;
+  min-height: 0;
+  padding-top: 52px;
+  padding-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#screen6 .genre-instruction {
+  flex: 0 0 auto;
+  width: min(100%, 690px);
+  margin-bottom: 0;
+  font-size: clamp(18px, 3.8vw, 27px);
+}
+
+#screen6 .keyword-tracker {
+  flex: 0 0 auto;
+  margin-top: 28px;
+}
+
+#screen6 .question-content {
+  flex: 0 0 auto;
+  margin-top: 12px;
+}
+
+@media (max-height: 760px) {
+  #screen6 .question-inner {
+    padding-top: 43px;
+    padding-bottom: 16px;
+  }
+
+  #screen6 .keyword-tracker {
+    margin-top: 20px;
+  }
+
+  #screen6 .keyword-card {
+    min-height: 86px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  #screen6 .keyword-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  #screen6 .keyword-value {
+    font-size: 22px;
+  }
+
+  #screen6 .previous-answers {
+    height: 145px;
+    flex-basis: 145px;
+    margin-bottom: 10px;
+  }
+
+  #screen6 .question-content h2 {
+    margin-bottom: 10px;
+    font-size: clamp(22px, 5.5vw, 30px);
+  }
+
+  #screen6 .text-input {
+    min-height: 62px;
+  }
+
+  #screen6 .keyword-error {
+    min-height: 16px;
+    margin: 6px 0 -4px;
+  }
+
+  #screen6 .full {
+    min-height: 52px;
+    margin-top: 10px;
+    font-size: 19px;
+  }
+}
+
+
+/* 表示欄の高さは参考画像に合わせて固定します（短い画面でも変更しません）。 */
+#screen4 .previous-answers,
+#screen5 .previous-answers,
+#screen6 .previous-answers {
+  height: 190px;
+  flex-basis: 190px;
+}
+
+@media (max-height: 760px) {
+  #screen4 .previous-answers,
+  #screen5 .previous-answers,
+  #screen6 .previous-answers {
+    height: 190px;
+    flex-basis: 190px;
+  }
+}

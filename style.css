@@ -1483,3 +1483,587 @@ button { -webkit-tap-highlight-color: transparent; }
 .final-screen {
   padding-top: max(42px, calc(34px + 24px));
 }
+
+/* ============================================================
+   トップページ：遊び方レイアウト
+   スクロールなしで「はじめる」まで表示できるようにします。
+   ============================================================ */
+.intro-screen {
+  height: 100svh;
+  min-height: 100svh;
+  padding: 12px 0 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.intro-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.intro-hero {
+  position: relative;
+  width: min(100%, 680px);
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.intro-arc {
+  position: absolute;
+  z-index: 0;
+  left: 8%;
+  right: 8%;
+  top: 5%;
+  bottom: 4%;
+  border: clamp(4px, .7vw, 7px) solid #000;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+}
+
+.intro-guide-copy {
+  position: absolute;
+  z-index: 2;
+  top: 6%;
+  left: 5%;
+  right: 5%;
+  text-align: center;
+  color: #000;
+}
+
+.intro-guide-copy h1 {
+  margin: 0 0 clamp(18px, 2.5vh, 28px);
+  font-size: clamp(24px, 5vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+
+.intro-guide-copy p {
+  margin: 0;
+  font-size: clamp(15px, 3.2vw, 23px);
+  line-height: 1.65;
+  font-weight: 700;
+}
+
+.intro-guide-copy p + p {
+  margin-top: 2px;
+}
+
+.intro-hero .intro-illustration {
+  position: absolute;
+  z-index: 1;
+  left: 7%;
+  right: 7%;
+  bottom: 1%;
+  width: auto;
+  height: auto;
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.intro-hero .intro-illustration img {
+  display: block;
+  width: min(100%, 620px);
+  max-height: none;
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.intro-start {
+  position: relative;
+  z-index: 5;
+  flex: 0 0 auto;
+  width: min(100%, 620px);
+  min-height: clamp(58px, 8vh, 78px);
+  margin: 8px auto 0;
+  font-size: clamp(19px, 4vw, 26px);
+}
+
+/* 縦が短い端末では、説明・イラスト・ボタンをさらに圧縮 */
+@media (max-height: 760px) {
+  .intro-screen { padding-top: 6px; padding-bottom: 8px; }
+  .intro-guide-copy { top: 2%; }
+  .intro-guide-copy h1 { margin-bottom: 10px; font-size: clamp(22px, 5vw, 30px); }
+  .intro-guide-copy p { font-size: clamp(13px, 3vw, 19px); line-height: 1.45; }
+  .intro-hero .intro-illustration { bottom: 0; left: 10%; right: 10%; }
+  .intro-start { min-height: 54px; margin-top: 5px; }
+}
+
+@media (max-width: 420px) {
+  .intro-arc { left: 4%; right: 4%; top: 5%; bottom: 4%; }
+  .intro-guide-copy { left: 3%; right: 3%; }
+  .intro-guide-copy h1 { font-size: 24px; }
+  .intro-guide-copy p { font-size: 14px; }
+  .intro-hero .intro-illustration { left: 3%; right: 3%; bottom: 1%; }
+}
+
+/* ============================================================
+   トップページ：PC固定サイズ＋スマホ縮小対応
+   大きな画面では円形の吹き出しとイラストを固定サイズで表示し、
+   画面が小さい場合だけ全体の比率を保ったまま縮小します。
+   ============================================================ */
+.intro-screen {
+  width: 100%;
+  min-height: 100svh;
+  height: 100svh;
+  padding: 12px 0 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.intro-screen .screen-inner {
+  width: min(100% - 34px, 760px);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.intro-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 0;
+}
+
+/* 大画面ではこのサイズから変わりません */
+.intro-hero {
+  position: relative;
+  flex: 0 0 850px;
+  width: 620px;
+  height: 850px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+/* 円形の吹き出し。イラストとは別に固定サイズの構図を保ちます */
+.intro-arc {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  border: 7px solid #000;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+}
+
+.intro-guide-copy {
+  position: absolute;
+  z-index: 2;
+  top: 38px;
+  left: 35px;
+  right: 35px;
+  text-align: center;
+  color: #000;
+}
+
+.intro-guide-copy h1 {
+  margin: 0 0 24px;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+
+.intro-guide-copy p {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.65;
+  font-weight: 700;
+}
+
+.intro-guide-copy p + p {
+  margin-top: 2px;
+}
+
+/* うさぎのイラストは円形の下部に固定し、円との位置関係を維持 */
+.intro-hero .intro-illustration {
+  position: absolute;
+  z-index: 1;
+  left: 11%;
+  right: 11%;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.intro-hero .intro-illustration img {
+  display: block;
+  width: 78%;
+  max-width: none;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.intro-start {
+  position: relative;
+  z-index: 5;
+  flex: 0 0 auto;
+  width: 630px;
+  max-width: 100%;
+  min-height: 72px;
+  margin: 8px auto 0;
+  font-size: 24px;
+  box-sizing: border-box;
+}
+
+/* 小さい画面では、円＋イラストの比率を崩さず全体を縮小 */
+@media (max-width: 650px) {
+  .intro-screen .screen-inner {
+    width: calc(100% - 28px);
+    max-width: none;
+  }
+
+  .intro-hero {
+    flex: 0 1 auto;
+    width: min(620px, calc(100vw - 56px));
+    height: auto;
+    aspect-ratio: 620 / 850;
+    max-width: 100%;
+  }
+
+  .intro-arc {
+    border-width: clamp(4px, 0.95vw, 7px);
+  }
+
+  .intro-guide-copy {
+    top: 4.5%;
+    left: 5.5%;
+    right: 5.5%;
+  }
+
+  .intro-guide-copy h1 {
+    margin-bottom: 3.8%;
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  .intro-guide-copy p {
+    font-size: clamp(15px, 3.2vw, 23px);
+  }
+
+  .intro-hero .intro-illustration {
+    left: 11%;
+    right: 11%;
+    bottom: 0;
+  }
+
+  .intro-hero .intro-illustration img {
+    width: 78%;
+  }
+
+  .intro-start {
+    width: 100%;
+    min-height: 67px;
+    margin-top: 8px;
+    font-size: clamp(20px, 5vw, 24px);
+  }
+}
+
+/* iPhone SEなど、特に縦が短い画面だけ少し縮小 */
+@media (max-width: 650px) and (max-height: 700px) {
+  .intro-screen {
+    padding-top: 5px;
+    padding-bottom: 7px;
+  }
+
+  .intro-hero {
+    width: min(620px, calc(100vw - 42px));
+  }
+
+  .intro-start {
+    min-height: 58px;
+    margin-top: 5px;
+  }
+}
+
+/* ============================================================
+   トップページ：吹き出しの比率を固定
+   PCでは620×850pxの基準レイアウトをそのまま使用し、
+   画面が大きくなっても円形の囲みを拡大・変形させません。
+   スマホでは620×850の比率を維持したまま縮小します。
+   ============================================================ */
+.intro-screen .intro-hero {
+  flex: 0 0 850px;
+  width: 620px;
+  height: 850px;
+  aspect-ratio: auto;
+  max-width: none;
+  max-height: none;
+}
+
+.intro-screen .intro-arc {
+  left: 0;
+  right: auto;
+  top: 0;
+  bottom: auto;
+  width: 620px;
+  height: 850px;
+  aspect-ratio: auto;
+  border-radius: 50%;
+}
+
+.intro-screen .intro-guide-copy {
+  left: 35px;
+  right: 35px;
+  top: 38px;
+}
+
+.intro-screen .intro-hero .intro-illustration {
+  left: 68px;
+  right: 68px;
+  bottom: 0;
+}
+
+.intro-screen .intro-hero .intro-illustration img {
+  width: 484px;
+  max-width: none;
+  height: auto;
+}
+
+/* 画面幅が基準幅より小さい場合だけ、全体を同じ比率で縮小 */
+@media (max-width: 650px) {
+  .intro-screen .intro-hero {
+    width: min(620px, calc(100vw - 56px));
+    height: auto;
+    aspect-ratio: 620 / 850;
+    flex: 0 1 auto;
+  }
+
+  .intro-screen .intro-arc {
+    width: 100%;
+    height: 100%;
+    border-width: clamp(4px, 0.95vw, 7px);
+  }
+
+  .intro-screen .intro-guide-copy {
+    left: 5.65%;
+    right: 5.65%;
+    top: 4.47%;
+  }
+
+  .intro-screen .intro-guide-copy h1 {
+    margin-bottom: 3.8%;
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  .intro-screen .intro-guide-copy p {
+    font-size: clamp(15px, 3.2vw, 23px);
+  }
+
+  .intro-screen .intro-hero .intro-illustration {
+    left: 11%;
+    right: 11%;
+    bottom: 0;
+  }
+
+  .intro-screen .intro-hero .intro-illustration img {
+    width: 78%;
+    max-width: none;
+  }
+}
+
+/* ============================================================
+   トップページ：参考画像に合わせた吹き出し比率
+   基準サイズは参考画像の実際の円形部分に合わせて約607×645px。
+   大画面でもこの比率・サイズを維持し、スマホでは同比率のまま縮小します。
+   ============================================================ */
+.intro-screen .intro-hero {
+  flex: 0 0 645px;
+  width: 607px;
+  height: 645px;
+  aspect-ratio: 607 / 645;
+}
+
+.intro-screen .intro-arc {
+  width: 607px;
+  height: 645px;
+}
+
+.intro-screen .intro-guide-copy {
+  left: 34px;
+  right: 34px;
+  top: 78px;
+}
+
+.intro-screen .intro-hero .intro-illustration {
+  left: 67px;
+  right: 67px;
+  bottom: 0;
+}
+
+.intro-screen .intro-hero .intro-illustration img {
+  width: 473px;
+}
+
+@media (max-width: 650px) {
+  .intro-screen .intro-hero {
+    width: min(607px, calc(100vw - 56px));
+    height: auto;
+    aspect-ratio: 607 / 645;
+    flex: 0 1 auto;
+  }
+
+  .intro-screen .intro-arc {
+    width: 100%;
+    height: 100%;
+  }
+
+  .intro-screen .intro-guide-copy {
+    left: 5.60%;
+    right: 5.60%;
+    top: 12.1%;
+  }
+
+  .intro-screen .intro-hero .intro-illustration {
+    left: 11.04%;
+    right: 11.04%;
+    bottom: 0;
+  }
+
+  .intro-screen .intro-hero .intro-illustration img {
+    width: 78%;
+  }
+}
+
+
+/* ============================================================
+   トップページ最終調整：参考画像の比率を維持
+   ・PCなど大きな画面では607×645pxを基準サイズとして固定
+   ・小さい画面では、幅と高さの両方に収まるように
+     607:645の比率を保ったまま全体を縮小
+   ・円、文字、うさぎのイラストを同じ構図の中で縮小する
+   ============================================================ */
+.intro-guide-copy p {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+@media (max-width: 650px) {
+  .intro-screen {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .intro-screen .screen-inner {
+    width: calc(100% - 28px);
+  }
+
+  .intro-screen .intro-hero {
+    flex: 0 1 auto;
+    width: min(
+      607px,
+      calc(100vw - 28px),
+      calc((100svh - 90px) * 607 / 645)
+    );
+    height: auto;
+    aspect-ratio: 607 / 645;
+    max-width: 100%;
+    max-height: none;
+  }
+
+  .intro-screen .intro-arc {
+    width: 100%;
+    height: 100%;
+    border-width: clamp(4px, 0.95vw, 7px);
+  }
+
+  .intro-screen .intro-guide-copy {
+    left: 5.60%;
+    right: 5.60%;
+    top: 12.1%;
+  }
+
+  .intro-screen .intro-guide-copy h1 {
+    margin-bottom: 3.8%;
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  .intro-screen .intro-guide-copy p {
+    font-size: clamp(15px, 3.2vw, 23px);
+    line-height: 1.55;
+  }
+
+  .intro-screen .intro-hero .intro-illustration {
+    left: 11.04%;
+    right: 11.04%;
+    bottom: 0;
+  }
+
+  .intro-screen .intro-hero .intro-illustration img {
+    width: 78%;
+    max-width: none;
+  }
+
+  .intro-screen .intro-start {
+    width: min(100%, 630px);
+    min-height: 67px;
+    margin-top: 8px;
+    font-size: clamp(20px, 5vw, 24px);
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 650px) and (max-height: 700px) {
+  .intro-screen .intro-start {
+    min-height: 58px;
+    margin-top: 5px;
+  }
+
+  .intro-screen .intro-hero {
+    width: min(
+      607px,
+      calc(100vw - 28px),
+      calc((100svh - 70px) * 607 / 645)
+    );
+  }
+}
+
+/* 円の実寸に連動して文字サイズも同じ比率で縮小（iPhoneの縦長・横長の差にも対応） */
+.intro-screen .intro-hero {
+  container-type: inline-size;
+}
+
+.intro-screen .intro-guide-copy h1 {
+  font-size: min(36px, 5.93cqw);
+}
+
+.intro-screen .intro-guide-copy p {
+  font-size: min(23px, 3.79cqw);
+}
+
+@media (max-width: 650px) {
+  .intro-screen .intro-guide-copy h1 {
+    font-size: 5.93cqw;
+  }
+
+  .intro-screen .intro-guide-copy p {
+    font-size: 3.79cqw;
+  }
+}

@@ -1333,7 +1333,8 @@ button { -webkit-tap-highlight-color: transparent; }
     width: calc(100% - 28px);
     height: auto;
     min-height: calc(100svh - 34px);
-    padding: 4px 0 4px;
+    /* 固定表示のプログレスバー（高さ34px）の下から内容を開始 */
+    padding: 34px 0 4px;
     overflow: visible;
     display: flex;
     flex-direction: column;

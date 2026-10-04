@@ -1464,3 +1464,22 @@ button { -webkit-tap-highlight-color: transparent; }
     margin-top: 4px;
   }
 }
+
+/* ============================================================
+   プログレスバーの下の文字が見えなくならないための調整
+   プログレスバーの矢印の隙間を白で不透明にし、
+   下のコンテンツが矢印の隙間から透けて見えないようにします。
+   ============================================================ */
+.question-progress {
+  background: #ffffff;
+  isolation: isolate;
+}
+
+/* プログレスバーより下からコンテンツを開始する */
+.screen-inner {
+  padding-top: max(70px, calc(34px + 24px));
+}
+
+.final-screen {
+  padding-top: max(42px, calc(34px + 24px));
+}

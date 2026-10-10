@@ -56,7 +56,7 @@ function updateQuestionProgress(screenNumber) {
   const progress = $("questionProgress");
 
   // 説明ページ（0）では進捗バーを表示しません。
-  if (screenNumber === 0) {
+  if (screenNumber === 0 || screenNumber === 9) {
     progress.classList.remove("visible");
     return;
   }
@@ -401,6 +401,64 @@ window.addEventListener("resize", () => {
     const element = $(id);
     if (element) fitPreviousAnswerText(element);
   });
+});
+
+$("shareButton").addEventListener("click", () => {
+  const popup = window.open("", "_blank", "width=700,height=1000");
+  if (!popup) return;
+
+  const cover = $("bookCover");
+  if (!cover) { popup.close(); return; }
+
+  // 完成画面と共有ウインドウで文字位置・大きさがずれないように、
+  // 表紙とその中の各要素の「現在表示されている計算済みCSS」をコピーします。
+  // これにより、vw / clamp() など画面サイズに依存する指定も、
+  // 完成画面で実際に表示されていた値のまま再現できます。
+  const coverClone = cover.cloneNode(true);
+  const originalElements = [cover, ...cover.querySelectorAll("*")];
+  const cloneElements = [coverClone, ...coverClone.querySelectorAll("*")];
+
+  originalElements.forEach((original, index) => {
+    const clone = cloneElements[index];
+    if (!clone) return;
+    const computed = window.getComputedStyle(original);
+    let cssText = "";
+    for (const property of computed) {
+      cssText += `${property}:${computed.getPropertyValue(property)};`;
+    }
+    clone.setAttribute("style", cssText);
+  });
+
+  // 画像だけは about:blank 基準にならないよう絶対URLへ変換します。
+  const coverImage = coverClone.querySelector(".book-cover-image");
+  if (coverImage) {
+    coverImage.src = new URL(coverImage.getAttribute("src"), window.location.href).href;
+  }
+
+  const styleHref = new URL("style.css", window.location.href).href;
+  const title = state.title || "あなたの本";
+  const safeTitle = title.replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+  const coverWidth = Math.ceil(cover.getBoundingClientRect().width);
+  const coverHeight = Math.ceil(cover.getBoundingClientRect().height);
+
+  popup.document.open();
+  popup.document.write(`<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=${coverWidth}, initial-scale=1.0">
+  <title>${safeTitle}</title>
+  <link rel="stylesheet" href="${styleHref}">
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; }
+    body { min-width: ${coverWidth}px; min-height: ${coverHeight}px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; overflow: auto; }
+    .book-cover { margin: 0 !important; flex: 0 0 auto; }
+  </style>
+</head>
+<body></body>
+</html>`);
+  popup.document.close();
+  popup.document.body.appendChild(coverClone);
 });
 
 $("restartButton").addEventListener("click", resetAll);

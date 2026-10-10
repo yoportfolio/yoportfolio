@@ -2067,3 +2067,208 @@ button { -webkit-tap-highlight-color: transparent; }
     font-size: 3.79cqw;
   }
 }
+
+/* 今回のレイアウト調整 */
+.intro-screen .intro-start {
+  width: min(630px, calc(100% - 100px));
+  max-width: none;
+  box-sizing: border-box;
+}
+
+#screen9 .final-screen {
+  padding-top: 42px;
+}
+
+#screen9 .final-actions {
+  width: min(100%, 610px);
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#screen9 .final-actions .button {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+/* ============================================================
+   第1〜4問：文字サイズ・表示位置の統一
+   ユーザー入力を最も目立たせ、質問文・ジャンル案内などは
+   共通サイズに統一します。
+   ============================================================ */
+#screen3 .genre-instruction,
+#screen4 .genre-instruction,
+#screen5 .genre-instruction,
+#screen6 .genre-instruction,
+#screen3 .question-content h2,
+#screen4 .question-content h2,
+#screen5 .question-content h2,
+#screen6 .question-content h2 {
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ユーザーが入力した文字を最も目立たせ、左右中央に配置 */
+#screen3 .text-input,
+#screen4 .text-input,
+#screen5 .text-input,
+#screen6 .text-input {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* 2〜4問目に表示する「これまでの回答」もユーザー入力なので中央揃え */
+#screen4 .previous-answers,
+#screen5 .previous-answers,
+#screen6 .previous-answers {
+  text-align: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* お題カード内の補助文字も質問文より控えめに統一 */
+#screen3 .keyword-label,
+#screen4 .keyword-label,
+#screen5 .keyword-label,
+#screen6 .keyword-label {
+  font-size: 10px;
+}
+
+#screen3 .keyword-value,
+#screen4 .keyword-value,
+#screen5 .keyword-value,
+#screen6 .keyword-value {
+  font-size: 18px;
+}
+
+/* 入力欄のプレースホルダーも、入力文字より控えめに表示 */
+#screen3 .text-input::placeholder,
+#screen4 .text-input::placeholder,
+#screen5 .text-input::placeholder,
+#screen6 .text-input::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media (max-width: 420px) {
+  #screen3 .genre-instruction,
+  #screen4 .genre-instruction,
+  #screen5 .genre-instruction,
+  #screen6 .genre-instruction,
+  #screen3 .question-content h2,
+  #screen4 .question-content h2,
+  #screen5 .question-content h2,
+  #screen6 .question-content h2 {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  #screen3 .text-input,
+  #screen4 .text-input,
+  #screen5 .text-input,
+  #screen6 .text-input {
+    font-size: 20px;
+  }
+
+  #screen4 .previous-answers,
+  #screen5 .previous-answers,
+  #screen6 .previous-answers {
+    font-size: 20px;
+  }
+}
+
+/* ============================================================
+   今回の調整：各ページの表示位置を統一
+   ・トップページの「円＋文字＋うさぎ」を一回り小さくし、上端に余白を作る
+   ・「どちらのお題で物語をつくりますか？」のページ全体を少し上へ移動
+   ============================================================ */
+
+/* トップページ：円＋文字＋うさぎのユニットを約90%に縮小 */
+.intro-screen {
+  padding-top: 24px;
+  padding-bottom: 14px;
+}
+
+.intro-screen .intro-hero {
+  flex: 0 0 580.5px;
+  width: 546.3px;
+  height: 580.5px;
+}
+
+.intro-screen .intro-arc {
+  width: 546.3px;
+  height: 580.5px;
+}
+
+.intro-screen .intro-guide-copy {
+  left: 30.6px;
+  right: 30.6px;
+  top: 70.2px;
+}
+
+.intro-screen .intro-hero .intro-illustration {
+  left: 60.3px;
+  right: 60.3px;
+}
+
+.intro-screen .intro-hero .intro-illustration img {
+  width: 425.7px;
+}
+
+/* スマートフォンでも同じ90%の比率を維持 */
+@media (max-width: 650px) {
+  .intro-screen {
+    padding-top: 24px;
+    padding-bottom: 8px;
+  }
+
+  .intro-screen .intro-hero {
+    width: min(
+      546.3px,
+      calc(100vw - 28px),
+      calc((100svh - 90px) * 546.3 / 580.5)
+    );
+    height: auto;
+    aspect-ratio: 546.3 / 580.5;
+    flex: 0 1 auto;
+  }
+
+  .intro-screen .intro-arc {
+    width: 100%;
+    height: 100%;
+  }
+
+  .intro-screen .intro-guide-copy {
+    left: 5.60%;
+    right: 5.60%;
+    top: 12.1%;
+  }
+
+  .intro-screen .intro-hero .intro-illustration {
+    left: 11.04%;
+    right: 11.04%;
+    bottom: 0;
+  }
+
+  .intro-screen .intro-hero .intro-illustration img {
+    width: 78%;
+  }
+}
+
+/* 難易度選択ページ：内容全体を上へ寄せ、質問ページの案内文の高さに近づける */
+#screen1 .start-screen {
+  transform: translateY(-38px);
+}
+
+@media (max-height: 700px) {
+  #screen1 .start-screen {
+    transform: translateY(-28px);
+  }
+}

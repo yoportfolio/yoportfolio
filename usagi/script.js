@@ -219,11 +219,11 @@ function fitPreviousAnswerText(element) {
 
 function updateFinalScreen() {
   const coverImages = {
-    "ホラー": "./ホラー表紙.JPG",
-    "SF": "./SF表紙.JPG",
-    "ミステリー": "./ミステリー表紙.JPG",
-    "恋愛": "./恋愛表紙.JPG",
-    "コメディ": "./コメディ表紙.JPG"
+    "ホラー": "./image-20.jpg",
+    "SF": "./image-03.jpg",
+    "ミステリー": "./image-24.jpg",
+    "恋愛": "./image-27.jpg",
+    "コメディ": "./image-17.jpg"
   };
 
   const taglines = {

@@ -2272,3 +2272,350 @@ button { -webkit-tap-highlight-color: transparent; }
     transform: translateY(-28px);
   }
 }
+
+
+/* ============================================================
+   デザイン修正01〜10：全画面の位置・文字サイズ・レスポンシブ調整
+   PCを基準に、iPadとスマートフォンでも切れずに表示します。
+   ============================================================ */
+:root {
+  --blue: #168bd0;
+  --button: #168bd0;
+}
+
+html, body { width: 100%; }
+.screen { width: 100%; min-height: 100svh; }
+.screen-inner { width: min(92vw, 980px); padding-top: 70px; padding-bottom: 24px; }
+
+/* 難易度選択：画面の中央にまとまり、文字サイズを統一 */
+#screen1 .start-screen {
+  min-height: 100svh;
+  justify-content: flex-start;
+  padding-top: clamp(150px, 22vh, 300px);
+  transform: none;
+}
+#screen1 .start-screen h1 {
+  margin: 0 0 clamp(42px, 7vh, 80px);
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.65;
+}
+#screen1 .choice-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 4vw, 48px);
+  width: min(100%, 940px);
+  margin: 0 auto;
+}
+#screen1 .choice-button {
+  width: 100%;
+  min-height: clamp(130px, 17vh, 190px);
+  padding: 22px 16px;
+  border: 1.5px solid var(--blue);
+  border-radius: 24px;
+  box-shadow: 0 5px 12px rgba(0,0,0,.12);
+}
+#screen1 .button-title { color: var(--blue); font-size: clamp(22px, 2.5vw, 30px); }
+#screen1 .button-note { font-size: clamp(12px, 1.25vw, 16px); }
+
+/* お題選択画面：ジャンル説明と3つのお題を横並びに */
+#screen2 .screen-inner { padding-top: clamp(90px, 16vh, 190px); }
+#screen2 .screen2-body { width: min(100%, 960px); padding-top: 0; }
+#screen2 .screen2-body h2 {
+  margin-bottom: clamp(30px, 5vh, 60px);
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.6;
+}
+#screen2 .word-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: clamp(28px, 5vh, 55px);
+}
+#screen2 .word-card {
+  min-width: 0;
+  min-height: clamp(90px, 11vh, 130px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 8px;
+  border-radius: 0;
+}
+#screen2 .word-card + .word-card { border-left: 0; }
+#screen2 .word-label { font-size: clamp(11px, 1.2vw, 15px); }
+#screen2 .word-value { font-size: clamp(17px, 2.2vw, 27px); overflow-wrap: anywhere; }
+#screen2 .button-row { width: min(100%, 680px); margin: 0 auto; gap: 24px; }
+#screen2 .button { min-height: 54px; border-radius: 28px; font-size: clamp(16px, 1.8vw, 22px); }
+#screen2 .button.secondary { color: var(--blue); border-color: var(--blue); }
+#screen2 .button.primary { background: var(--blue); border-color: var(--blue); }
+
+/* 第1〜4問：進捗バーの直下から同じ位置で内容を開始 */
+.question-progress { height: 42px; }
+.question-step { min-height: 42px; font-size: clamp(11px, 1.5vw, 18px); }
+.question-step { background: #b6bcc3; }
+.question-step.done { background: #3d66b1; }
+#screen3 .question-inner,
+#screen4 .question-inner,
+#screen5 .question-inner,
+#screen6 .question-inner {
+  width: min(92vw, 960px);
+  height: 100svh;
+  min-height: 0;
+  padding-top: clamp(110px, 18vh, 205px);
+  padding-bottom: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#screen3 .genre-instruction,
+#screen4 .genre-instruction,
+#screen5 .genre-instruction,
+#screen6 .genre-instruction {
+  width: 100%;
+  margin: 0 auto clamp(18px, 3vh, 36px);
+  font-size: clamp(18px, 2.7vw, 32px);
+  line-height: 1.55;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+#screen3 .keyword-tracker,
+#screen4 .keyword-tracker,
+#screen5 .keyword-tracker,
+#screen6 .keyword-tracker {
+  width: 100%;
+  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+#screen3 .keyword-card,
+#screen4 .keyword-card,
+#screen5 .keyword-card,
+#screen6 .keyword-card {
+  min-width: 0;
+  min-height: clamp(82px, 9vh, 112px);
+  padding: 12px 7px;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#screen3 .keyword-card + .keyword-card,
+#screen4 .keyword-card + .keyword-card,
+#screen5 .keyword-card + .keyword-card,
+#screen6 .keyword-card + .keyword-card { border-left: 0; }
+#screen3 .keyword-label,
+#screen4 .keyword-label,
+#screen5 .keyword-label,
+#screen6 .keyword-label { font-size: clamp(10px, 1.25vw, 15px); margin-bottom: 8px; }
+#screen3 .keyword-value,
+#screen4 .keyword-value,
+#screen5 .keyword-value,
+#screen6 .keyword-value { font-size: clamp(17px, 2.3vw, 28px); line-height: 1.25; }
+#screen3 .question-content,
+#screen4 .question-content,
+#screen5 .question-content,
+#screen6 .question-content {
+  width: 100%;
+  padding-top: clamp(28px, 4.5vh, 55px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+#screen3 .question-content h2,
+#screen4 .question-content h2,
+#screen5 .question-content h2,
+#screen6 .question-content h2 {
+  margin: 0 0 clamp(18px, 3vh, 32px);
+  font-size: clamp(22px, 3.2vw, 38px);
+  line-height: 1.4;
+  color: var(--blue);
+  text-align: center;
+  font-weight: 800;
+}
+#screen3 .text-input,
+#screen4 .text-input,
+#screen5 .text-input,
+#screen6 .text-input {
+  min-height: 56px;
+  max-height: 80px;
+  padding: 12px 20px;
+  border: 1.5px solid var(--blue);
+  border-radius: 32px;
+  font-size: clamp(17px, 2vw, 24px);
+  text-align: left;
+  box-shadow: 0 0 0 3px rgba(22,139,208,.08);
+}
+#screen4 .textarea, #screen5 .textarea { min-height: 56px; height: 56px; resize: none; }
+#screen3 .full, #screen4 .full, #screen5 .full, #screen6 .full {
+  min-height: 48px;
+  margin-top: 12px;
+  border-radius: 26px;
+  background: var(--blue);
+  border-color: var(--blue);
+  font-size: 17px;
+}
+#screen4 .previous-answers,
+#screen5 .previous-answers,
+#screen6 .previous-answers {
+  height: clamp(72px, 10vh, 125px);
+  min-height: 0;
+  flex: 0 0 auto;
+  margin: 0 0 clamp(18px, 3vh, 32px);
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #e9e6d4;
+  font-size: clamp(16px, 2vw, 24px);
+  line-height: 1.4;
+  text-align: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#screen4 .question-content h2,
+#screen5 .question-content h2 { margin-bottom: clamp(16px, 2.5vh, 28px); }
+#screen4 .hint, #screen5 .hint, #screen6 .hint { margin-top: 5px; font-size: 12px; }
+#screen6 .keyword-error { margin-top: 4px; }
+
+/* タイトル・名前入力：同じ基準位置と文字サイズ。ウサギも表示 */
+#screen7 .question-inner, #screen8 .question-inner {
+  width: min(92vw, 760px);
+  min-height: 100svh;
+  padding-top: clamp(125px, 22vh, 260px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.extra-question-rabbit {
+  display: block;
+  order: 2;
+  width: clamp(130px, 22vw, 250px);
+  height: clamp(150px, 26vh, 300px);
+  object-fit: contain;
+  margin: 0 auto;
+}
+#screen7 .question-content, #screen8 .question-content {
+  order: 1;
+  width: min(100%, 660px);
+  padding-top: 0;
+}
+#screen7 .question-content h2, #screen8 .question-content h2 {
+  margin: 0 0 24px;
+  color: var(--blue);
+  font-size: clamp(25px, 3.5vw, 42px);
+  line-height: 1.55;
+}
+#screen7 .question-description, #screen8 .question-description { display: none; }
+#screen7 .text-input, #screen8 .text-input {
+  min-height: 62px;
+  border: 1.5px solid var(--blue);
+  border-radius: 34px;
+  font-size: clamp(16px, 1.8vw, 22px);
+  box-shadow: 0 0 0 3px rgba(22,139,208,.08);
+}
+#screen7 .button, #screen8 .button {
+  min-height: 56px;
+  margin-top: 16px;
+  border-radius: 30px;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+/* 完成画面：デザイン見本に合わせて表紙とボタンを中央配置 */
+#screen9 .final-screen { width: min(92vw, 960px); padding-top: 26px; }
+#screen9 .final-screen h1 { font-size: clamp(25px, 3.5vw, 42px); margin-bottom: 24px; }
+#screen9 .book-cover { width: min(100%, 560px); }
+#screen9 .final-actions { width: min(100%, 960px); gap: 16px; margin-top: 28px; }
+#screen9 .final-actions .button {
+  min-height: 64px;
+  border: 1.5px solid var(--blue);
+  border-radius: 26px;
+  color: var(--blue);
+  background: #fff;
+  font-size: clamp(18px, 2.8vw, 32px);
+}
+#screen9 .final-actions #restartButton { background: #fff; color: var(--blue); }
+
+/* iPad：余白を抑えて横幅内に収める */
+@media (min-width: 651px) and (max-width: 1024px) {
+  #screen1 .start-screen { padding-top: 18vh; }
+  #screen2 .screen-inner { padding-top: 14vh; }
+  #screen3 .question-inner, #screen4 .question-inner, #screen5 .question-inner, #screen6 .question-inner {
+    padding-top: 14vh;
+  }
+  #screen7 .question-inner, #screen8 .question-inner { padding-top: 18vh; }
+}
+
+/* モバイル：1画面内に収め、文字や入力欄が画面外へ切れないように */
+@media (max-width: 650px) {
+  .screen-inner { width: calc(100% - 28px); padding-bottom: 12px; }
+  #screen1 .start-screen { padding-top: 16vh; }
+  #screen1 .start-screen h1 { font-size: clamp(23px, 6vw, 30px); margin-bottom: 7vh; }
+  #screen1 .choice-list { grid-template-columns: 1fr; gap: 16px; }
+  #screen1 .choice-button { min-height: 105px; padding: 14px; }
+  #screen2 .screen-inner { padding-top: 12vh; }
+  #screen2 .screen2-body h2 { font-size: clamp(20px, 5.2vw, 27px); margin-bottom: 4vh; }
+  #screen2 .word-list { margin-bottom: 4vh; }
+  #screen2 .word-card { min-height: 84px; padding: 8px 3px; }
+  #screen2 .word-label { font-size: 10px; }
+  #screen2 .word-value { font-size: clamp(13px, 3.6vw, 18px); }
+  #screen2 .button-row { gap: 12px; }
+  #screen2 .button { min-height: 48px; font-size: 15px; }
+  .question-progress, .question-step { height: 34px; min-height: 34px; }
+  .question-step { font-size: clamp(8px, 2.2vw, 12px); padding-left: 7px; padding-right: 6px; }
+  #screen3 .question-inner, #screen4 .question-inner, #screen5 .question-inner, #screen6 .question-inner {
+    width: calc(100% - 24px);
+    padding-top: 58px;
+    padding-bottom: 8px;
+  }
+  #screen3 .genre-instruction, #screen4 .genre-instruction, #screen5 .genre-instruction, #screen6 .genre-instruction {
+    font-size: clamp(14px, 3.7vw, 19px);
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  #screen3 .keyword-card, #screen4 .keyword-card, #screen5 .keyword-card, #screen6 .keyword-card {
+    min-height: 64px;
+    padding: 6px 2px;
+  }
+  #screen3 .keyword-label, #screen4 .keyword-label, #screen5 .keyword-label, #screen6 .keyword-label { font-size: 9px; margin-bottom: 4px; }
+  #screen3 .keyword-value, #screen4 .keyword-value, #screen5 .keyword-value, #screen6 .keyword-value { font-size: clamp(12px, 3.5vw, 17px); }
+  #screen3 .question-content, #screen4 .question-content, #screen5 .question-content, #screen6 .question-content { padding-top: 18px; }
+  #screen3 .question-content h2, #screen4 .question-content h2, #screen5 .question-content h2, #screen6 .question-content h2 {
+    font-size: clamp(19px, 5vw, 25px); margin-bottom: 14px; line-height: 1.35;
+  }
+  #screen3 .text-input, #screen4 .text-input, #screen5 .text-input, #screen6 .text-input { min-height: 48px; font-size: 16px; padding: 9px 13px; }
+  #screen4 .textarea, #screen5 .textarea { height: 48px; min-height: 48px; }
+  #screen3 .full, #screen4 .full, #screen5 .full, #screen6 .full { min-height: 42px; margin-top: 8px; font-size: 15px; }
+  #screen4 .previous-answers, #screen5 .previous-answers, #screen6 .previous-answers { height: 58px; margin-bottom: 12px; padding: 7px 9px; font-size: clamp(13px, 3.5vw, 17px); }
+  #screen4 .hint, #screen5 .hint, #screen6 .hint { font-size: 10px; }
+  #screen7 .question-inner, #screen8 .question-inner { padding-top: 15vh; gap: 14px; }
+  #screen7 .question-content h2, #screen8 .question-content h2 { font-size: clamp(24px, 6.5vw, 32px); margin-bottom: 18px; }
+  .extra-question-rabbit { width: clamp(120px, 40vw, 190px); height: clamp(140px, 24vh, 210px); }
+  #screen7 .text-input, #screen8 .text-input { min-height: 52px; font-size: 16px; }
+  #screen7 .button, #screen8 .button { min-height: 48px; margin-top: 10px; }
+  #screen9 .final-screen { padding-top: 22px; }
+  #screen9 .final-screen h1 { font-size: clamp(22px, 6vw, 30px); margin-bottom: 16px; }
+  #screen9 .book-cover { width: min(76vw, calc((100svh - 230px) * .75)); min-width: 0; }
+  #screen9 .final-actions { margin-top: 20px; gap: 10px; }
+  #screen9 .final-actions .button { min-height: 48px; font-size: clamp(15px, 4vw, 20px); }
+}
+
+@media (max-height: 700px) {
+  #screen1 .start-screen { padding-top: 12vh; }
+  #screen2 .screen-inner { padding-top: 10vh; }
+  #screen3 .question-inner, #screen4 .question-inner, #screen5 .question-inner, #screen6 .question-inner { padding-top: 58px; }
+  #screen7 .question-inner, #screen8 .question-inner { padding-top: 12vh; }
+  .extra-question-rabbit { height: 18vh; }
+}
+
+/* 2・3ページ：参考デザインに合わせてウサギを追加（既存の操作は維持） */
+#screen1 .selection-rabbit, #screen2 .selection-rabbit {
+  display:block; width:clamp(150px, 30vw, 380px); height:clamp(140px, 27vh, 360px);
+  object-fit:contain; margin:clamp(12px, 3vh, 32px) auto 0;
+}
+#screen2 .selection-rabbit { margin-bottom:clamp(12px, 2vh, 24px); }
+@media (max-width: 600px) {
+  #screen1 .selection-rabbit, #screen2 .selection-rabbit { width:min(48vw, 200px); height:min(22svh, 190px); margin-top:12px; }
+  #screen2 .selection-rabbit { margin-bottom:12px; }
+}
+@media (max-height: 700px) {
+  #screen1 .selection-rabbit, #screen2 .selection-rabbit { height:17svh; margin-top:8px; }
+}

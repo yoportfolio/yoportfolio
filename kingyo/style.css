@@ -1,4 +1,63 @@
-:root{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#143a42;background:#e7efeb}*{box-sizing:border-box}body{margin:0}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer;border:0}button:focus-visible,a:focus-visible{outline:3px solid #e68242;outline-offset:4px}main{max-width:740px;margin:auto;padding:16px 20px}header{height:58px;display:flex;align-items:center;justify-content:space-between}header a{color:inherit;text-decoration:none;font-family:serif;font-size:26px;letter-spacing:.15em}header span{font-family:sans-serif;font-size:11px;letter-spacing:.15em;margin-left:18px}#pause{background:#fff9;padding:10px 16px;border-radius:25px}#scene{position:relative;width:100%;height:min(70svh,650px);min-height:320px;border-radius:8px;overflow:hidden;background:#55b4d5 url('assets/title.jpg') center/cover;isolation:isolate;box-shadow:0 16px 40px #163b4315}#scene.festival{background-image:url('assets/festival.png')}#scene.tank{background-image:url('assets/aquarium.png')}#decor{position:absolute;inset:0;background:url('assets/background-fish.png') center/cover;pointer-events:none;opacity:.8;display:none}.festival #decor{display:block}#player{position:absolute;width:17%;height:15%;object-fit:contain;bottom:9%;transform:translateX(-50%);z-index:3}#senior{position:absolute;width:27%;height:30%;object-fit:contain;left:38%;top:26%;z-index:2}.object{position:absolute;object-fit:contain;transform:translate(-50%,-50%);width:31%;height:25%;z-index:4}.food{width:24px;height:24px;background:#a55525;border:3px solid #ffe3a4;border-radius:50%;box-shadow:0 2px 6px #0003}#hud{position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;z-index:5;font-size:13px;letter-spacing:.1em}#hud span{background:#fffD;padding:9px 14px;border-radius:30px}#overlay{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;padding:24px;background:#092d3820}#overlay.dark{background:#102b32}#card{max-width:420px;text-align:center;background:#f8f7efed;padding:32px 28px;border-radius:4px;box-shadow:0 4px 30px #1233}#card.clear{background:transparent;color:#f7f4e9;box-shadow:none}h1,h2{font-family:serif;font-weight:500;line-height:1.6}h1{font-size:62px;letter-spacing:.25em;margin:8px 0 16px}h2{font-size:27px;margin:10px 0 20px}p{font-size:14px;line-height:1.9;margin:12px 0}small{font-size:11px;letter-spacing:.12em}.primary{background:#163b43;color:#fff;border-radius:30px;padding:14px 32px;margin-top:16px;min-height:48px}.secondary{display:block;background:none;color:inherit;text-decoration:underline;margin:18px auto 0;font-size:12px}#controls{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px}#controls button{touch-action:none;user-select:none;background:#163b43;color:#fff;min-width:94px;border-radius:50px;padding:8px 20px;font-size:30px}#controls button span{display:block;font-size:11px}#hint{font-size:11px;text-align:center;margin:0}footer{text-align:center;font-size:10px;letter-spacing:.18em;padding:18px;color:#5b767b}[hidden]{display:none!important}@media(max-width:480px){main{padding:8px 12px}header{height:50px}header span{margin-left:12px;font-size:9px}#scene{height:calc(100svh - 176px);min-height:280px}#card{padding:24px 20px}h2{font-size:23px}#controls button{min-width:80px}footer{padding:12px}}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#222;font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif}main{padding: max(24px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom));min-height:100vh;min-height:100svh;display:flex;align-items:center;flex-direction:column;justify-content:center}.game{width:min(72vh,600px,100%);width:min(calc(100svh - 150px),600px,100%)}#stage{width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#55b1e8;isolation:isolate}#water{position:absolute;inset:0;background:url('assets/festival.png') 50% 50%/cover;background-repeat:no-repeat;will-change:transform;transform:scale(1.01)}#fish{position:absolute;z-index:3;bottom:-1%;left:50%;width:25%;height:auto;transform:translateX(-50%);transform-origin:50% 100%;pointer-events:none;will-change:transform}.poi{position:absolute;z-index:2;width:75%;height:auto;max-width:none;transform:translate(-50%,-50%);pointer-events:none;will-change:width,left,top}nav{display:flex;justify-content:center;gap:12px;margin-top:9px}nav button{width:94px;height:35px;border:1px solid #00d8ed;border-radius:25px;background:#fff;color:#00d8ed;font-size:25px;line-height:1;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}nav button:active,nav button.held{background:#e2fcff}button{font:inherit;cursor:pointer}button:focus-visible,summary:focus-visible{outline:3px solid #00b7cc;outline-offset:4px}#result{position:absolute;inset:0;z-index:4;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:15px;background:#ffffff82}#result p{background:#fff;padding:12px 22px;font-size:18px;margin:0}#retry,#resume{border:1px solid #00cfe3;background:#fff;color:#116673;border-radius:24px;padding:10px 24px}#resume{position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%)}details{width:min(600px,100%);margin-top:22px;font-size:12px;color:#687376}summary{cursor:pointer;text-align:center;list-style:none}summary::-webkit-details-marker{display:none}summary:after{content:' ＋'}details[open] summary:after{content:' −'}details p{line-height:1.8}.test-buttons{display:flex;flex-wrap:wrap;gap:8px}.test-buttons button{border:1px solid #c4e6e9;background:#fff;padding:7px 12px;color:#41636a;border-radius:4px}[hidden]{display:none!important}@media(max-height:480px){main{padding:12px}.game{width:min(calc(100svh - 100px),600px,100%)}details{margin-top:10px}}@media(prefers-reduced-motion:reduce){#fish{will-change:auto}}
 
-@supports not (height:100svh){#scene{height:65vh}}
-@media(max-height:480px) and (orientation:landscape){main{max-width:850px}header{height:38px}#scene{height:calc(100svh - 130px);min-height:170px}#card{padding:10px 20px}h1{font-size:34px;margin:0}h2{font-size:18px;margin:4px}p{font-size:12px;margin:4px}.primary{margin-top:6px;padding:8px 24px}footer{display:none}#controls{padding-top:8px}}
+/* Overscan is fixed: steering never changes the background zoom. */
+#water{inset:-8%;background-image:url('assets/distance.png');transform:none;z-index:0}
+#foreground{position:absolute;inset:0 -20%;background:url('assets/foreground.png') center/100% 100% no-repeat;will-change:transform;pointer-events:none;z-index:1}
+
+#nets{position:absolute;inset:0;pointer-events:none;z-index:2}.poi{position:absolute}
+
+/* Decorative middle plane: above the distant water, below the foreground. */
+#middle-fish{position:absolute;inset:-4% -8%;z-index:0;pointer-events:none;will-change:transform}
+#drifting-fish{display:block;width:100%;height:100%;object-fit:contain;will-change:transform;pointer-events:none}
+
+/* Preserve the previous head position and pivot; the newly drawn body continues below the viewport. */
+#fish{bottom:-26.78531450%;transform-origin:50% 29.14074707%}
+
+/* Capture sequence is contained within the existing square stage. */
+#capture{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+#capture-net,#capture-fish{position:absolute;height:auto;max-width:none;transform:translate(-50%,-50%);transform-origin:center;will-change:transform,width,left,top}
+#capture-net{z-index:0}#capture-fish{z-index:1}
+#capture-white{position:absolute;inset:0;z-index:2;background:#fff;opacity:0;pointer-events:none}
+#result{z-index:5;background:#fff;gap:0}
+#caught-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#result p{white-space:pre-line;position:absolute;top:12%;left:12%;right:12%;text-align:center;background:transparent;padding:0;font-size:clamp(18px,3.5vw,30px);line-height:1.7;z-index:1}
+#retry{position:absolute;bottom:2%;z-index:1;background:#ffffffdf;font-size:12px;padding:7px 16px}
+
+/* Day progression stays within the original square tank. */
+#food{position:absolute;z-index:3;width:6%;height:auto;transform:translate(-50%,-50%);pointer-events:none}
+#hunger{opacity:0;position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+#day-label{position:absolute;z-index:4;top:50%;left:5%;right:5%;transform:translateY(-50%);margin:0;text-align:center;color:#62605b;font-size:clamp(14px,2.4vw,22px);font-weight:400;pointer-events:none}
+#day-transition{position:absolute;inset:0;z-index:6;background:#000;opacity:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
+#day-message{margin:0;color:#fff;text-align:center;white-space:pre-line;font-size:clamp(12px,2vw,18px);line-height:1.8;font-weight:400}
+#result.starved{background:#000;color:#fff}
+#result.starved p{top:29%;font-size:clamp(12px,2vw,18px);color:#fff}
+#result.starved #retry{color:#fff;background:#000;border-color:#666}
+
+/* Opening uses a separate overlay so existing game layers keep their layout. */
+#opening{position:absolute;inset:0;z-index:10;background:#fff;container-type:inline-size;pointer-events:none}
+#opening-title,#opening-tank{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#opening-characters{position:absolute;inset:0;opacity:0}
+#senior-fish,#ending-senior{position:absolute;left:66%;top:68%;width:33%;height:auto;transform:translate(-50%,-50%)}
+#opening-speech,#ending-speech{position:absolute;left:22%;top:28%;width:44%;aspect-ratio:878/713}
+#opening-speech img,#ending-speech img{position:absolute;inset:0;width:100%;height:100%}
+#opening-speech p,#ending-speech p{position:absolute;inset:12% 9% 22% 9%;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#332824;font-size:clamp(8px,2.7cqw,16.2px);line-height:1.6;overflow-wrap:normal;white-space:nowrap}
+#opening-white{position:absolute;inset:0;background:#fff;opacity:0}
+
+#ending{position:absolute;inset:0;z-index:11;background:#fff;container-type:inline-size;pointer-events:none}
+#ending-tank{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#ending-characters{position:absolute;inset:0}
+#ending-message{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#332824;font-size:clamp(11px,3.5cqw,21px);line-height:1.6}
+#ending-white{position:absolute;inset:0;background:#fff;opacity:0}
+
+#ending-retry{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid #00cfe3;background:#fff;color:#116673;border-radius:24px;padding:10px 24px;pointer-events:auto}
+
+#scene-fade{position:absolute;inset:0;z-index:12;background:#fff;opacity:0;pointer-events:none}
+
+#opening-net{position:absolute;left:110%;top:60%;width:110%;height:auto;max-width:none;z-index:0;pointer-events:none}
+#senior-fish{z-index:1}#opening-speech{z-index:2}
+#opening-speech.exclamation p{font-size:clamp(24px,8cqw,48px)}
+
+/* Caught result: bag above, single-line caption below, matching the supplied reference. */
+#result:not(.starved){container-type:inline-size}
+#result:not(.starved) #caught-image{inset:auto;left:5%;top:-5%;width:90%;height:90%;object-fit:contain}
+#result:not(.starved) #resultText{top:87%;left:4%;right:4%;white-space:nowrap;font-size:clamp(13px,5cqw,30px);line-height:1.4;color:#000}

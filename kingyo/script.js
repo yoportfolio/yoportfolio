@@ -5,6 +5,7 @@ const state={camera:0,x:.5,velocity:0,bank:0,capture:null,pois:[],delay:2.5,last
 const openingDialogue=document.querySelector('#opening-speech p').innerHTML;
 let opening=null;
 let ending=null;
+let deathEnding=null;
 let hungerFade=null;
 let last=0;const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function clearInput(){keys.clear();pointers.clear();$('left').classList.remove('held');$('right').classList.remove('held');}
@@ -89,6 +90,7 @@ if((state.day===2&&!state.fed)||state.day===3){
   $('day-label').hidden=true;
   $('hunger').hidden=state.day!==3;
   $('hunger').style.opacity=state.day===3?Math.max(0,Math.min(1,(state.dayTime-19)/4)):0;
+  if(state.day===3&&state.dayTime>19)state.hungerSeen=true;
  }
 }
 if(state.day===2&&!state.fed){
@@ -135,6 +137,7 @@ function updateHungerFade(dt){
  if(hungerFade.age>=1){$('hunger').hidden=true;hungerFade=null;}
 }
 function resetDays(){
+ deathEnding=null;$('death-facts').hidden=true;state.hungerSeen=false;
  ending=null;$('scene-fade').hidden=true;$('scene-fade').style.opacity=0;$('ending').hidden=true;$('ending-retry').hidden=true;$('retry').hidden=false;
  for(const id of ['left','right'])$(id).disabled=false;
  hungerFade=null;
@@ -167,10 +170,10 @@ function updateDayTransition(dt){
   t.switched=true;state.pois=[];$('nets').replaceChildren();
   if(t.death){
    $('result').classList.add('starved');$('caught-image').src='assets/starved.png';$('caught-image').alt='餓死した金魚';
-   $('resultText').textContent='あなたは餓死した';$('result').hidden=false;
+   $('resultText').textContent='あなたは餓死しました';$('result').hidden=false;$('retry').hidden=true;
   }else $('day-message').textContent=(state.day===1?'１日が終わった\n今日はなんとか生き延びた…':'2日目が終わった\n今日もなんとか生き延びた…');
  }
- if(t.death){overlay.style.opacity=Math.max(0,1-(t.age-1));if(t.age>=2){overlay.hidden=true;state.transition=null;}return;}
+ if(t.death){overlay.style.opacity=Math.max(0,1-(t.age-1));if(t.age>=2){overlay.hidden=true;state.transition=null;startDeathEnding();}return;}
  if(t.age<4)return;
  if(!t.next){
   t.next=true;state.day++;state.dayTime=0;state.food=null;state.fed=false;state.delay=2.5;state.lastDangerAt=state.time;state.velocity=0;state.bank=0;
@@ -186,7 +189,7 @@ const mix=(a,b,t)=>a+(b-a)*t;
 function beginCapture(poi){
  const stage=$('stage').getBoundingClientRect(),fish=$('fish').getBoundingClientRect();
  state.playing=false;clearInput();
- state.capture={age:0,net:poiGeometry(poi),fishX:(fish.left+fish.width/2-stage.left)/stage.width,fishY:(fish.top+fish.height/2-stage.top)/stage.height,bank:state.bank};
+ state.capture={weakened:state.day===3&&state.hungerSeen,age:0,net:poiGeometry(poi),fishX:(fish.left+fish.width/2-stage.left)/stage.width,fishY:(fish.top+fish.height/2-stage.top)/stage.height,bank:state.bank};
  $('capture-net').src=poi.el.src;poi.el.hidden=true;$('fish').hidden=true;
  $('capture').hidden=false;$('resume').hidden=true;
  renderCapture();
@@ -207,12 +210,14 @@ function renderCapture(){
  $('capture-fish').style.transform=`translate(-50%,-50%) rotate(${g.angle}deg)`;
  $('capture-white').style.opacity=g.white;
  if(c.age>=2.05){
-  $('capture').hidden=true;$('resultText').textContent='あなたは捕まりました';$('result').hidden=false;$('retry').hidden=true;
+  $('capture').hidden=true;
+  if(c.weakened){$('result').classList.add('starved');$('caught-image').src='assets/starved.png';$('caught-image').alt='衰弱した金魚';}
+  $('resultText').textContent=c.weakened?'あなたは衰弱していたため廃棄された':'あなたは捕まりました';$('result').hidden=false;$('retry').hidden=true;
   if(c.age<2.85){$('scene-fade').hidden=false;$('scene-fade').style.opacity=Math.max(0,1-(c.age-2.05)/.8);}
   else if(c.age<4.05){$('scene-fade').hidden=true;$('scene-fade').style.opacity=0;}
  }
  if(c.age>=4.05){$('scene-fade').hidden=false;$('scene-fade').style.opacity=Math.min(1,(c.age-4.05)/.8);}
- if(c.age>=4.85)startEnding();
+ if(c.age>=4.85){if(c.weakened){state.capture=null;startDeathEnding(true);}else startEnding();}
 }
 
 function render(){if(state.capture){renderCapture();return;} // Fish swims across the screen; a subtle layer shift preserves depth.
@@ -283,9 +288,38 @@ function updateEnding(dt){
  if(t>=8)$('ending-white').style.opacity=Math.min(1,(t-8)/1.5);
  if(t>=9.5){ending.done=true;$('ending-white').style.opacity=1;$('ending-retry').hidden=false;}
 }
-function frame(now){const dt=Math.min((now-last)/1000,.05);last=now;if(!document.hidden){if(opening){updateOpening(dt);}else if(ending){updateEnding(dt);}else if(state.transition){updateDayTransition(dt);}else if(state.capture){state.capture.age+=dt;}else update(dt);if(!state.paused)updateHungerFade(dt);}render();requestAnimationFrame(frame);}
+const deathFacts=[
+ '金魚すくいは、飼育できる環境がある人が少ない、<br>出店側の管理が難しいという理由から近年<br>ヨーヨー釣りやスーパーボールすくいに置き換わっている',
+ '金魚すくいをとりまく世論の変化は<br>動物福祉の議論だけではない',
+ '近年の猛暑の影響で金魚すくいの金魚は<br>弱りやすくなっている',
+ '金魚すくいの金魚は1匹ずつ丁寧に扱われるわけではないため、<br>輸送や環境の変化によるストレスで<br>弱ってしまうことも少なくない',
+ '金魚すくいの金魚は、<br>お祭りのゲームで使う魚として、一つの袋に数百匹、<br>多いときには千匹ほど詰めて出荷される',
+ '金魚すくいで余った金魚の活用法は<br>大型熱帯魚の生き餌などが挙げられる'
+];
+function startDeathEnding(alreadyWhite=false){
+ state.playing=false;state.paused=false;clearInput();
+ deathEnding={age:alreadyWhite?4:0,shown:false};
+ $('retry').hidden=true;
+ for(const id of ['left','right'])$(id).disabled=true;
+}
+function updateDeathEnding(dt){
+ const e=deathEnding;e.age+=dt;
+ if(e.age<3)return;
+ $('scene-fade').hidden=false;
+ $('scene-fade').style.opacity=clamp01(e.age-3);
+ if(e.age<4)return;
+ if(!e.shown){
+  e.shown=true;$('death-fact-text').innerHTML=deathFacts[Math.floor(Math.random()*deathFacts.length)];
+  $('death-facts').hidden=false;$('result').hidden=true;
+ }
+ $('scene-fade').style.opacity=1-clamp01((e.age-4)/.8);
+ if(e.age>=4.8)$('scene-fade').hidden=true;
+}
+
+function frame(now){const dt=Math.min((now-last)/1000,.05);last=now;if(!document.hidden){if(opening){updateOpening(dt);}else if(ending){updateEnding(dt);}else if(deathEnding){updateDeathEnding(dt);}else if(state.transition){updateDayTransition(dt);}else if(state.capture){state.capture.age+=dt;}else update(dt);if(!state.paused)updateHungerFade(dt);}render();requestAnimationFrame(frame);}
 for(const [id,dir] of [['left',-1],['right',1]]){const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();if(!state.playing||state.paused)return;b.setPointerCapture(e.pointerId);pointers.set(e.pointerId,dir);b.classList.add('held');});const release=e=>{pointers.delete(e.pointerId);b.classList.remove('held');};for(const event of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(event,release);}
 window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();if(state.playing&&!state.paused)keys.add(e.key);}if(e.code==='Space'&&!e.repeat){e.preventDefault();setPaused(!state.paused);}});window.addEventListener('keyup',e=>keys.delete(e.key));window.addEventListener('blur',()=>setPaused(true));document.addEventListener('visibilitychange',()=>{if(document.hidden)setPaused(true);});
+$('death-retry').onclick=startOpening;
 $('ending-retry').onclick=startOpening;
 $('retry').onclick=reset;$('resume').onclick=()=>setPaused(false);
 Promise.all([...document.images].map(img=>img.decode().catch(()=>{}))).then(()=>{startOpening();requestAnimationFrame(frame);});

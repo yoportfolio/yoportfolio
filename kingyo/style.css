@@ -61,3 +61,9 @@
 #result:not(.starved){container-type:inline-size}
 #result:not(.starved) #caught-image{inset:auto;left:5%;top:-5%;width:90%;height:90%;object-fit:contain}
 #result:not(.starved) #resultText{top:87%;left:4%;right:4%;white-space:nowrap;font-size:clamp(13px,5cqw,30px);line-height:1.4;color:#000}
+
+/* White closing screen, positioned to match the supplied square reference. */
+#death-facts{position:absolute;inset:0;z-index:11;background:#fff;container-type:inline-size;color:#000}
+#death-fact-text{position:absolute;left:3%;right:3%;top:49%;transform:translateY(-50%);margin:0;text-align:center;font-family:'Hiragino Mincho ProN','Yu Mincho',serif;font-size:clamp(8px,2.8cqw,17px);line-height:1.8;font-weight:400;overflow-wrap:anywhere}
+#death-retry{position:absolute;left:50%;top:63.5%;transform:translateX(-50%);width:24%;height:7.5%;padding:0;border:1.5px solid #00aeef;border-radius:999px;background:#fff;color:#00aeef;font-size:clamp(12px,3cqw,18px)}
+#result.starved #resultText{left:3%;right:3%;font-size:clamp(10px,3cqw,18px)}

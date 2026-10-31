@@ -19,3 +19,9 @@ PC：矢印ボタン／左右キー。目次・一覧から直接移動。拡大
 修正版：2ページの画像破損を修復。キャラクター動画を円形に切り抜き。6ページのリンクをusagi/index.htmlへ変更し別タブで表示。
 
 全29ページをご提供の動画なしPNG画像に差し替えました。
+
+公開後に画像とボタンが動かない場合の修正：ページ情報をscript.jsへ統合しました。index.htmlとscript.jsをリポジトリ直下へ上書きしてください。assets/pages.jsは不要です。
+
+Usagi画像修正版：日本語画像名を英数字に変更。既存公開先ではusagiフォルダを中身ごと上書きしてください。
+
+Safari対策版：Usagiの画像・CSS・JavaScriptをusagi/index.htmlに内蔵。リポジトリ直下のindex.htmlとscript.js、usagi内のindex.htmlを上書きしてください。

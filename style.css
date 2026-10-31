@@ -2,4 +2,4 @@
 
 .page video.circle-video{border-radius:50%;clip-path:circle(50% at 50% 50%);object-fit:cover;overflow:hidden}
 
-a.hotspot[href="chatgpt.pdf"]{border-radius:999px;cursor:pointer}a.hotspot[href="chatgpt.pdf"]:hover{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 2px white}
+a.hotspot[href$=".pdf"]{border-radius:999px;cursor:pointer}a.hotspot[href$=".pdf"]:hover{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 2px white}
